@@ -1,0 +1,19 @@
+<a class="pointer btn btn-white" title="Primera" data-page="first">
+  <i class="fa fa-angle-double-left"></i>
+</a>
+<a class="pointer btn btn-white" title="Anterior" data-page="previous">
+  <i class="fa fa-angle-left"></i>
+</a>
+
+{{#each pages}}
+<a class="pointer btn btn-white" data-page="{{pageNumber}}">
+  <span>{{pageNumber}}</span>
+</a>
+{{/each}}
+
+<a class="pointer btn btn-white" title="Siguiente" data-page="next">
+  <i class="fa fa-angle-right"></i>
+</a>
+<a class="pointer btn btn-white" title="Última" data-page="last">
+  <i class="fa fa-angle-double-right"></i>
+</a>

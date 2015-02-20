@@ -1,0 +1,19 @@
+{
+  "server": {
+    "debug": {
+      "request": ["error"]
+    },
+    "connections": {
+      "routes": {
+        "security": true
+      }
+    }
+  },
+  "connections": [{
+    "port": 9000,
+    "labels": ["web"]
+  }],
+  "plugins": {
+    "./server/assets.dev": { }
+  }
+}
