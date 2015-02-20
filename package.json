@@ -1,10 +1,10 @@
 {
-  "name": "bellota",
+  "name": "digimon",
   "version": "0.0.1",
   "description": "Configure datawarehouse ETLs",
   "repository": {
     "type": "git",
-    "url": "http://git.departamento6.net/abiee/bellota.git"
+    "url": "https://github.com/ArianWolf/Digimon.git"
   },
   "dependencies": {
     "backbone": "^1.1.2",

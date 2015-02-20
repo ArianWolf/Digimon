@@ -12,6 +12,6 @@ Glue.compose(Manifest, composeOptions, function(err, server) {
   }
 
   server.start(function() {
-    console.log('Bellota started.');
+    console.log('Digimon started.');
   });
 });

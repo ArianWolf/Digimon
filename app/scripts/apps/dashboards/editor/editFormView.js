@@ -7,7 +7,6 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
   class EditFormView extends Marionette.ItemView {
     constructor(...rest) {
       this.template = dashboardFormEditor;
-      debugger;
       this.bindings = {
         '#name': 'name',
         '#description': 'description'
