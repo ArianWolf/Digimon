@@ -1,21 +1,29 @@
+import 'gridster.js/dist/jquery.gridster';
 import App from 'app';
 import EditorTemplate from 'apps/dashboards/editor/templates/editor';
 import PaneTemplate from 'apps/dashboards/editor/templates/pane';
-import 'gridster.js/dist/jquery.gridster';
+import BarGraphView from '../../../widgets/barGraph/barGraphView';
 
 App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette) {
   'use strict';
 
-  class PaneView extends Marionette.ItemView {
+  class PaneView extends Marionette.LayoutView {
     constructor(...rest) {
       this.tagName = 'li';
-      this.className = 'panel panel-default bg-success';
+      this.className = 'panel panel-default';
+      this.regions = { body: '.panel-body'};
       super(...rest);
     }
 
     initialize() {
-      this.triggers = { 'click .remove': 'remove:pane' };
       this.template = PaneTemplate;
+      
+      this.triggers = { 'click .remove': 'remove:pane' };
+    }
+
+    onShow() {
+      var region = this.getRegion('body');
+      region.show(new BarGraphView());
     }
   }
 
@@ -45,7 +53,7 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
 
     onShow() {
       this.gridster = $('.gridster ul').gridster({
-        widget_base_dimensions: [300, 100], // jshint ignore:line
+        widget_base_dimensions: [455, 300], // jshint ignore:line
         resize: {
           enabled: true
         }

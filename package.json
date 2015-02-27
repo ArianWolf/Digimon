@@ -15,9 +15,9 @@
     "glue": "^2.0.0",
     "hapi": "^8.1.0",
     "lodash": "^3.1.0",
-    "nvd3": "^1.1.15-beta2"
+    "rickshaw": "^1.5.1"
   },
-  "devDependencies": {
+  "devDependencies"gulp: {
     "6to5": "^3.3.12",
     "6to5-loader": "^3.0.0",
     "chai": "^1.10.0",

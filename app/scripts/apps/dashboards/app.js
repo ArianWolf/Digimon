@@ -1,6 +1,5 @@
 import App from 'app';
 import './editor/dashboardEditor';
-import LineGraph from '../../widgets/lineGraph/lineGraph';
 import './entities';
 
 App.module('Dashboards', function(Dashboards, App, Backbone, Marionette) {
