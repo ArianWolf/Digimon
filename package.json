@@ -17,7 +17,7 @@
     "lodash": "^3.1.0",
     "rickshaw": "^1.5.1"
   },
-  "devDependencies"gulp: {
+  "devDependencies": {
     "6to5": "^3.3.12",
     "6to5-loader": "^3.0.0",
     "chai": "^1.10.0",
