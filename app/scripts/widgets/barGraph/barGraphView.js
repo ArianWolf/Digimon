@@ -1,4 +1,4 @@
-import 'rickshaw/rickshaw.css'
+import 'rickshaw/rickshaw.css';
 import Rickshaw from 'rickshaw';
 import Marionette from 'backbone.marionette';
 import barGraphTemplate from 'widgets/barGraph/templates/barGraph';
@@ -17,11 +17,14 @@ export default class BarGraphView extends Marionette.ItemView {
   onShow() {
     var data = this._generateRandomData();
     var graph = this._createGraph(data);
+    this._configureWidth(graph);
     this._setToolTipHover(graph);
 
     graph.render();
 
-    this._resizeGraph(graph);
+    this._resizeGraphOnPanelSizeChange(graph);
+
+    $(this.ui.graph).data('chart', graph);
   }
 
   // TODO: The data is generate randomly, just to show a 
@@ -41,7 +44,7 @@ export default class BarGraphView extends Marionette.ItemView {
     return new Rickshaw.Graph({
       renderer: 'bar',
       element: this.ui.graph[0],
-      height: 200,
+      height: $('.panel-body').height(),
       padding: { top: 0.5 },
       series: [{
         data: data[0],
@@ -55,8 +58,14 @@ export default class BarGraphView extends Marionette.ItemView {
     });
   }
 
+  _configureWidth(graph) {
+     graph.configure({
+      width: $('.panel-body').width(),
+    });
+  }
+
   _setToolTipHover(graph) {
-    var hoverDetail = new Rickshaw.Graph.HoverDetail({
+    new Rickshaw.Graph.HoverDetail({
       graph: graph,
       formatter: function(series, x, y) {
         var date = '<span class="date">' + 
@@ -70,17 +79,14 @@ export default class BarGraphView extends Marionette.ItemView {
     });
   }
 
-  _resizeGraph(graph) {
-    _.bind(function() {
-      $(window).resize(function() {
-        graph.configure({
-          width: $(this.ui.graph).width(),
-          height: 200
-        });
-        graph.render();
+  _resizeGraphOnPanelSizeChange(graph) {
+     $('.panel-body').on('click', function() {
+      graph.configure({
+        width: $('.panel-body').width(),
+        height: $('.panel-body').height()
       });
-    }, this);
-    
-    $(this.ui.graph).data('chart', graph);
+
+      graph.render();
+    });
   }
 }
