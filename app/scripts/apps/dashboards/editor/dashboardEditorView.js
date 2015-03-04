@@ -23,7 +23,9 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
 
     onShow() {
       var region = this.getRegion('body');
-      region.show(new widgetsContainer.realtimeGraph); // jshint ignore:line
+      var graph = new widgetsContainer.barGraph ; // jshint ignore:line
+
+      graph.show(region);
     }
   }
 

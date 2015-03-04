@@ -1,6 +1,6 @@
-import BarGraph from './barGraph/barGraphView';
-import RealtimeGraph from './realtimeGraph/realtimeGraphView';
-import AreaGraph from './areaGraph/areaGraphView';
+import BarGraph from './barGraph/barGraph';
+import RealtimeGraph from './realtimeGraph/realtimeGraph';
+import AreaGraph from './areaGraph/areaGraph';
 
 var container = {
   'barGraph': BarGraph,
