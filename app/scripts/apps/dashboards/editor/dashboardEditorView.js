@@ -2,7 +2,7 @@ import 'gridster.js/dist/jquery.gridster';
 import App from 'app';
 import EditorTemplate from 'apps/dashboards/editor/templates/editor';
 import PaneTemplate from 'apps/dashboards/editor/templates/pane';
-import BarGraphView from '../../../widgets/barGraph/barGraphView';
+import widgetsContainer from '../../../widgets/widgetsContainer';
 
 App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette) {
   'use strict';
@@ -23,7 +23,9 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
 
     onShow() {
       var region = this.getRegion('body');
-      region.show(new BarGraphView());
+      var graph = new widgetsContainer.barGraph ; // jshint ignore:line
+
+      graph.show(region);
     }
   }
 
@@ -53,7 +55,7 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
 
     onShow() {
       this.gridster = $('.gridster ul').gridster({
-        widget_base_dimensions: [455, 300], // jshint ignore:line
+        widget_base_dimensions: [200, 200], // jshint ignore:line
         resize: {
           enabled: true
         }

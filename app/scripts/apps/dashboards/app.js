@@ -17,11 +17,6 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette) {
       dashboardEditor.showEditor(dashboard);
     }
 
-    showWidgetLine() {
-      var lineGraph = new LineGraph({ region: this.getOption('region') });
-      lineGraph.show();
-    }
-
     editDashboard() {
       // TODO: until backend support, a moked item has been added for testing
       var dashboardMoked = {
