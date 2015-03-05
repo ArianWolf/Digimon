@@ -1,5 +1,6 @@
 import App from 'app';
 import './editor/dashboardEditor';
+import './list/dashboardList';
 import './entities';
 
 App.module('Dashboards', function(Dashboards, App, Backbone, Marionette) {
@@ -29,6 +30,23 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette) {
       });
 
       dashboardEditor.showFormEdit(dashboard);
+    }
+
+    showDashboardList() {
+      // TODO: until backend support, two moked items has been added for testing
+      var dashboardsMoked = [{
+        name: 'Dashboard ventas',
+        description: 'Este es un dashboard de ventas'
+      }, {  
+        name: 'Dashboard para pruebas',
+        description: 'Este es un dashboard de pruebas para la lista '
+      }];
+      var dashboards = new Dashboards.Entities.DashboardsCollection(dashboardsMoked);
+      var dashboardList = new Dashboards.List.DashboardList({
+        region: this.getOption('region')
+      });
+
+      dashboardList.showList(dashboards);
     }
   }
 

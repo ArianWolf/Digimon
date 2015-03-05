@@ -6,6 +6,10 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette){
   this.startWithParent = false;
 
   class DashboardController extends Marionette.Controller {
+    showDashboardList() {
+      this._loadModuleAndRun('showDashboardList');
+    }
+
     showNewDashboard() {
       this._loadModuleAndRun('showNewDashboard');
     }
@@ -32,6 +36,7 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette){
     new Marionette.AppRouter({
       controller: new DashboardController(),
       appRoutes: {
+        'app/dashboard/': 'showDashboardList',
         'app/dashboard/crear/': 'showNewDashboard',
         'app/dashboard/widgets/line/': 'showWidgetLine',
         'app/dashboard/editar/': 'editDashboard'
