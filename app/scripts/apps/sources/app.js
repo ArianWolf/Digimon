@@ -1,6 +1,7 @@
 import App from 'app';
 import './list/sourceList';
 import './entities';
+import './dropzone/sourceDropzone';
 
 App.module('Sources', function(Sources, App, Backbone,Marionette) {
   'use strict';
@@ -13,6 +14,14 @@ App.module('Sources', function(Sources, App, Backbone,Marionette) {
       });
 
       sourceList.showSources();
+    }
+
+    showDropzone() {
+      var sourceDropzone = new Sources.Dropzone.SourceDropzone({
+        region: this.getOption('region')
+      });
+
+      sourceDropzone.showDropzone();
     }
 
     _getAvailableSources() {

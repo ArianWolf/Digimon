@@ -10,6 +10,10 @@ App.module('Sources', function(Sources, App, Backbone, Marionette) {
       this._loadModuleAndRun('showAvailableSources');
     }
 
+    showDropzone() {
+      this._loadModuleAndRun('showDropzone');
+    }
+
     _loadModuleAndRun(action, ...rest) {
       require(['apps/sources/app'], function() {
         App.startSubApp('Sources', {
@@ -25,7 +29,8 @@ App.module('Sources', function(Sources, App, Backbone, Marionette) {
     new Marionette.AppRouter({
       controller: new SourcesController(),
       appRoutes: {
-        'app/fuentes/': 'showAvailableSources'
+        'app/fuentes/': 'showAvailableSources',
+        'app/fuentes/seleccionar/': 'showDropzone' 
       }
     });
   });
