@@ -46,22 +46,37 @@
 }
 
 // Dropzone
-.dropzone-container {
-  font-size: 250px;
-}
+@media (min-width: 800px) {
 
-.dropzone-container i {
-  margin-left: 39%;
-  color :#087A6D;
-}
+  .dropzone-container {
+    font-size: 250px;
+  }
 
-#dropzone {
-  border: 2px dashed #0087F7;
-  margin-left: 25%;
-  width: 50%;
-  font-size: 30px;
-  opacity: .5;
+  .dropzone-container i {
+    margin-left: 39%;
+    color :#087A6D;
+
+  }
 }
+@media (max-width: 800px) {
+
+  .dropzone-container {
+    font-size: 100px;
+  }
+
+  .dropzone-container i {
+    margin-left: 42%;
+    color :#087A6D;
+
+  }
+}
+  #dropzone {
+    border: 2px dashed #0087F7;
+    margin-left: 25%;
+    width: 50%;
+    font-size: 30px;
+    opacity: .5;
+  }
 
 #dropzone:hover {
   opacity: 1;
