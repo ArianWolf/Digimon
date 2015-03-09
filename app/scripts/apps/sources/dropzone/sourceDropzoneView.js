@@ -14,7 +14,8 @@ App.module('Sources.Dropzone.Views', function(Views, App, Backbone, Marionette) 
 
     onShow() {
       Dropzone.options.dropzone = {
-        maxFiles: 1,
+        createImageThumbnails: false,
+        maxFiles: 2,
         init: function() {
           this.on("drop", function(file) { 
             debugger; 
