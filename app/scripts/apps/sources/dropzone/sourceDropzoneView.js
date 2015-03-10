@@ -16,9 +16,10 @@ App.module('Sources.Dropzone.Views', function(Views, App, Backbone, Marionette) 
       Dropzone.options.dropzone = {
         createImageThumbnails: false,
         maxFiles: 2,
+        clickable: '.clickable-dropzone',
         init: function() {
-          this.on("drop", function(file) { 
-            debugger; 
+          this.on('drop', function(file) { 
+
           });
         }
       };
