@@ -1,7 +1,10 @@
-import Dropzone from 'dropzone';
 import 'dropzone/dist/dropzone.css';
+import 'sweetalert/lib/sweet-alert.css';
+import Dropzone from 'dropzone';
+import SweetAlert from 'sweetalert/lib/sweet-alert';
 import App from 'app';
 import sourceDropzoneTemplate from 'apps/sources/dropzone/templates/sourceDropzone';
+import previewTemplate from 'apps/sources/dropzone/templates/previewTemplate';
 
 App.module('Sources.Dropzone.Views', function(Views, App, Backbone, Marionette) {
   'use strict';
@@ -9,22 +12,30 @@ App.module('Sources.Dropzone.Views', function(Views, App, Backbone, Marionette) 
   class SourceDropzoneView extends Marionette.ItemView {
     constructor(...rest) {
       this.template = sourceDropzoneTemplate;
+      this.ui = { buttonNext: '.button-next'}
       super(...rest);
     }
 
     onShow() {
       Dropzone.options.dropzone = {
-        createImageThumbnails: false,
-        maxFiles: 2,
         clickable: '.clickable-dropzone',
-        init: function() {
-          this.on('drop', function(file) { 
-
-          });
-        }
       };
+
+      $(this.ui.buttonNext).on('click', function() {
+        SweetAlert("Bien!",
+        "Todo ha ocurrido con exito",
+        "success");
+
+        $('.confirm').on('click', function() {
+          App.router.navigate('/app/dashboard/crear/', { trigger: true });
+        });
+      });
+
+      // activar cuando haya servidor
+      /*SweetAlert("Error!",
+        "Algo anda mal",
+        "error");*/
     }
   }
-
   Views.SourceDropzoneView = SourceDropzoneView;
 });
