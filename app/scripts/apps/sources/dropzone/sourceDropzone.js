@@ -7,8 +7,8 @@ App.module('Sources.Dropzone', function(Dropzone, App, Backbone, Marionette) {
   class SourceDropzone extends Marionette.Object {
     showDropzone() {
       var region = this.getOption('region');
-      var DropzoneView = new Dropzone.Views.SourceDropzoneView();
-      region.show(DropzoneView);
+      var dropzoneView = new Dropzone.Views.SourceDropzoneView();
+      region.show(dropzoneView);
     }
   }
 
