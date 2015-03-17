@@ -80,13 +80,22 @@ export default class BarGraphView extends Marionette.ItemView {
   }
 
   _resizeGraphOnPanelSizeChange(graph) {
-     $('.panel-body').on('click', function() {
-      graph.configure({
-        width: $('.panel-body').width(),
-        height: $('.panel-body').height()
+      $('#main-container').on('mouseup', function() {
+        graph.configure({
+          width: $('.panel-body').width(),
+          height: $('.panel-body').height()
+        });
+
+        graph.render();
       });
 
-      graph.render();
-    });
+      $('#main-container').on('mousemove', function() {
+        graph.configure({
+          width: $('.panel-body').width(),
+          height: $('.panel-body').height()
+        });
+
+        graph.render();
+      });  
   }
 }

@@ -96,7 +96,7 @@ export default class AreaGraphView extends Marionette.ItemView {
   }
 
   _reziseOnPanelSizeChange(graph){
-    $('.panel-body').on('click', function() {
+    $('#main-container').on('mouseup', function() {
       graph.configure({
         width: $('.panel-body').width(),
         height: $('.panel-body').height()
@@ -104,5 +104,14 @@ export default class AreaGraphView extends Marionette.ItemView {
 
       graph.render();
     });
+
+    $('#main-container').on('mousemove', function() {
+      graph.configure({
+        width: $('.panel-body').width(),
+        height: $('.panel-body').height()
+      });
+
+      graph.render();
+    });  
   }
 }
