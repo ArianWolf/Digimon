@@ -4,7 +4,6 @@ import Dropzone from 'dropzone';
 import SweetAlert from 'sweetalert/lib/sweet-alert';
 import App from 'app';
 import sourceDropzoneTemplate from 'apps/sources/dropzone/templates/sourceDropzone';
-import previewTemplate from 'apps/sources/dropzone/templates/previewTemplate';
 
 App.module('Sources.Dropzone.Views', function(Views, App, Backbone, Marionette) {
   'use strict';
