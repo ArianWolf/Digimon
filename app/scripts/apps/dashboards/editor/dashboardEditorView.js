@@ -23,7 +23,7 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
 
     onShow() {
       var region = this.getRegion('body');
-      var graph = new widgetsContainer.barGraph ; // jshint ignore:line
+      var graph = new widgetsContainer.lineGraph; // jshint ignore:line
 
       graph.show(region);
     }

@@ -24,8 +24,6 @@ export default class RealtimeGraphView extends Marionette.ItemView {
     this._setHoverDetails(graph);
 
     this._updateGraphRealtime(graph, data);
-    
-    this._setAttributeAxis(); 
 
     this._resizeGraphOnPanelChange(graph);
 
@@ -86,13 +84,8 @@ export default class RealtimeGraphView extends Marionette.ItemView {
     }, 1000);    
   }
 
-  _setAttributeAxis() {
-    d3.selectAll(this.ui.yAxisLine).attr('x2', '7');
-    d3.selectAll(this.ui.YAxisText).attr('x', '12');
-  }
-
   _resizeGraphOnPanelChange(graph) {
-     $('.panel-body').on('click', function() {
+    $('#main-container').on('mouseup', function() {
       graph.configure({
         width: $('.panel-body').width(),
         height: $('.panel-body').height()
@@ -100,5 +93,14 @@ export default class RealtimeGraphView extends Marionette.ItemView {
 
       graph.render();
     });
+
+    $('#main-container').on('mousemove', function() {
+      graph.configure({
+        width: $('.panel-body').width(),
+        height: $('.panel-body').height()
+      });
+
+      graph.render();
+    });  
   }
 }
