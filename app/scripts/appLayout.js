@@ -6,7 +6,8 @@ export default class AppLayout extends Marionette.LayoutView {
     this.template = appLayoutTemplate;
     this.regions = {
       mainContainer: '#main-container',
-      sidebar: '#sidebar-container'
+      sidebar: '#sidebar-container',
+      modal: '#modal'
     };
     super(...rest);
   }

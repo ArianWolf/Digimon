@@ -18,7 +18,9 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
     initialize() {
       this.template = PaneTemplate;
       
-      this.triggers = { 'click .remove': 'remove:pane' };
+      this.triggers = { 
+        'click .remove': 'remove:pane',
+        'click .options': 'options:pane'};
     }
 
     onShow() {
