@@ -1,4 +1,3 @@
-
 import Dropzone from 'dropzone';
 import 'dropzone/dist/dropzone.css';
 import App from 'app';
