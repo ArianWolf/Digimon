@@ -1,26 +1,98 @@
 <div class="dropzone-container">
   <div class="row">
-  	<i class="fa fa-cloud-upload image-upload"></i>
+    <i class="fa fa-cloud-upload image-upload"></i>
   </div>
-  <div class="row"> 
 
-  	<span class="btn btn-cons btn-success m-b-10 button-add clickable-dropzone">
-  	  <i class="fa fa-plus"></i>
-  	  <span class="bold">Añadir</span>
+  <div id="actions" class="row">
+    <div class="col-xs-3"></div>
+    
+    <div class="col-xs-2 widthR">
+      <button class="btn btn-primary btn-cons m-b-10 fileinput-button dz-clickable"  type="button">
+        <i class="fa fa-plus"></i>
+        <span class="bold">Añadir</span>
+      </button>
+    </div>
+
+    <div class="col-xs-2 widthR">
+      <button class="btn btn-success btn-cons m-b-10 start" type="button">
+        <i class="fa fa-cloud-upload"></i> 
+        <span class="bold">Iniciar</span>
+      </button>
+    </div>
+
+    <div class="col-xs-2 widthR">
+      <button type="reset" class="btn btn-warning btn-cons m-b-10 cancel" type="button">
+        <i class="fa fa-ban"></i>
+        <span class="bold">Cancelar</span>
+      </button>
+    </div>
+
+    <div class="col-xs-3">
+      <!-- The global file processing state -->
+      <span class="fileupload-process">
+        <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="opacity: 0;">
+          <div class="progress-bar progress-bar-success" style="width: 100%;" data-dz-uploadprogress=""></div>
+        </div>
+      </span>
+    </div>
+
+  </div>
+
+  <div class="table table-striped " id="previews">
+    
+    <div id="template">
+      <div class="preview-padding">
+        <div class="row">
+          <div class="col-xs-2">
+              <span class="preview"><img data-dz-thumbnail=""></span>
+          </div>
+          <div class="col-xs-5">
+            <div>
+                <p class="name" data-dz-name=""></p>
+                <strong class="text-danger not-found" data-dz-errormessage=""></strong>
+            </div>
+
+            <div>
+                <p class="size" data-dz-size=""><strong</p>
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress=""></div>
+                </div>
+            </div>
+          </div>
+          <div class="col-xs-1"></div>
+          <div>
+            <button class="btn btn-success start">
+              <i class="fa fa-cloud-upload"></i> 
+              <span class="bold"></span>
+            </button>
+            <button data-dz-remove="" class="btn btn-warning cancel">
+              <i class="fa fa-ban"></i>
+              <span class="bold"></span>
+            </button>
+            <button data-dz-remove="" class="btn btn-danger delete">
+              <i class="fa fa-trash"></i>
+              <span class="bold"></span>
+            </button>
+          </div>
+        </div>  
+      </div>
+    </div> 
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-xs-6"></div>
+  <div class="col-xs-2 widthR">
+    <a  href="../" class="btn btn-cons btn-info">
+      <i class="fa fa-arrow-left"></i>
+      <span class="bold">Regresar</span>
+    </a>
+  </div>
+  <div class="col-xs-2 widthR">
+    <span class="btn btn-cons btn-info button-next">
+      <span class="bold">Siguiente</span>
+      <i class="fa fa-arrow-right"></i>
     </span>
-
-  </div>
-  <form id="dropzone" action="/target" class="dropzone clickable-dropzone"></form>
-  <div class="button-container">
-	  
-	  <a  href="../" class="btn btn-cons btn-info">
-		  <i class="fa fa-arrow-left"></i>
-		  <span class="bold">Regresar</span>
-	  </a>
-
-	  <span class="btn btn-cons btn-info button-next success-trigger">
-		  <span class="bold">Siguiente</span>
-		  <i class="fa fa-arrow-right"></i>
-		 </span>
   </div>
 </div>
+
