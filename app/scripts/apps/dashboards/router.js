@@ -14,18 +14,19 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette){
       this._loadModuleAndRun('showNewDashboard');
     }
 
-    showWidgetLine() {
-      this._loadModuleAndRun('showWidgetLine');
-    }
-
     editDashboard() {
       this._loadModuleAndRun('editDashboard');
+    }
+
+    configurePane() {
+      this._loadModuleAndRun('configurePane');
     }
 
     _loadModuleAndRun(action, ...rest) {
       require(['apps/dashboards/app'], function() {
         App.startSubApp('Dashboards', {
-          region: App.appLayout.getRegion('mainContainer')
+          region: App.appLayout.getRegion('mainContainer'),
+          modal: App.appLayout.getRegion('modal')
         });
         App.Dashboards.controller[action](...rest);
       });
@@ -38,8 +39,8 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette){
       appRoutes: {
         'app/dashboard/': 'showDashboardList',
         'app/dashboard/crear/': 'showNewDashboard',
-        'app/dashboard/widgets/line/': 'showWidgetLine',
-        'app/dashboard/editar/': 'editDashboard'
+        'app/dashboard/editar/': 'editDashboard',
+        'app/dashboard/crear/configurar/': 'configurePane'
       }
     });
   });

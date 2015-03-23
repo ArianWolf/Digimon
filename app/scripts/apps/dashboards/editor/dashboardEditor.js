@@ -1,6 +1,7 @@
 import App from 'app';
 import './dashboardEditorView';
 import './editFormView';
+import './dashboardConfiguratorView';
 
 App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
   'use strict';
@@ -25,6 +26,13 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
 
       this.listenTo(editorView, 'childview:remove:pane', (child) => {
         child.model.destroy();
+      });
+
+      this.listenTo(editorView, 'childview:options:pane', (child) => {
+        var region = this.getOption('modal');
+        var configuratorView = new Editor.Views.ConfiguratorView();
+
+        region.show(configuratorView);
       });
 
       this.listenTo(editorView, 'save:dashboard', () => {});
