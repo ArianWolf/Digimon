@@ -1,5 +1,7 @@
 import App from 'app';
 import ConfiguratorTemplate from 'apps/dashboards/editor/templates/paneConfigurator';
+import widgetsContainer from '../../../widgets/widgetsContainer';
+
 
 App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette) {
   'use strict';
@@ -19,13 +21,12 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
         'click .complete': 'complete:configurator',
         'click .sources': 'sources:configurator' 
       };
-
-      this.stickit();
     }
 
     onShow() {
-      $('.close').on('click', _.bind(this._hideView, this)); // jshint ignore:line
-      $(this.$el).on('keyup', _.bind(this._hideViewWithKeyCode, this)); // jshint ignore:line
+      $('.close').on('click', _.bind(this._hideView, this));
+
+      $(this.$el).on('keyup', _.bind(this._hideViewWithKeyCode, this));
     } 
 
     _hideView() {

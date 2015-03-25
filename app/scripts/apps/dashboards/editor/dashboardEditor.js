@@ -22,17 +22,25 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       });
 
       this.listenTo(editorView, 'add:pane', () => {
-        var widgetData = { titulo: ''};
-        var pane = new Backbone.Model(widgetData);
-        this.panes.add(pane);
+
         var region = this.getOption('modal');
-        var configuratorView = new Editor.Views.ConfiguratorView({model: pane});
+        var configuratorView = new Editor.Views.ConfiguratorView();
         region.show(configuratorView);
+         
         this.listenTo(configuratorView, 'complete:configurator', (child) => {
-          var typeWidget = child.view.$('.type-widget').val();
-          var graph = new this.widgetsContainer.barGraph();
-          
+          var title = child.view.$('.title').val();
           child.view.$el.css('display', 'none');
+          var graph = new this.widgetsContainer.barGraph;
+
+          var paneView = new Editor.Views.PaneView();
+
+          var pane = new Backbone.Model();
+          this.panes.add(pane);
+          debugger;
+          var widgetData = { titulo: title , graph: graph.show(paneView.body)};
+          var pane = new Backbone.Model(widgetData);  
+          this.panes.reset(pane);
+
         }); 
       });
 
