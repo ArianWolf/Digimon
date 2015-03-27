@@ -3,7 +3,7 @@ import LineGraphView from './lineGraphView';
 
 export default class LineGraph extends Marionette.Object {
   show(region) {
-    var lineGraphView = new LineGraphView();
+    var lineGraphView = new LineGraphView({'region': region});
 
     region.show(lineGraphView);
   }

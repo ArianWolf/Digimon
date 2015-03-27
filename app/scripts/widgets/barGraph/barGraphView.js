@@ -10,19 +10,21 @@ export default class BarGraphView extends Marionette.ItemView {
     this.ui = {
       'graph': '.rickshaw-stacked-bars'
     };
-
+  
     super(...rest);
   }
 
   onShow() {
+    var _regionPane = this.getOption('region');
+
     var data = this._generateRandomData();
-    var graph = this._createGraph(data);
-    this._configureWidth(graph);
+    var graph = this._createGraph(data, _regionPane);
+    this._configureWidth(graph, _regionPane);
     this._setToolTipHover(graph);
 
     graph.render();
 
-    this._resizeGraphOnPanelSizeChange(graph);
+    this._resizeGraphOnPanelSizeChange(graph, _regionPane);
 
     $(this.ui.graph).data('chart', graph);
   }
@@ -40,11 +42,11 @@ export default class BarGraphView extends Marionette.ItemView {
     return seriesData;
   }
 
-  _createGraph(data) {
+  _createGraph(data, region) {
     return new Rickshaw.Graph({
       renderer: 'bar',
       element: this.ui.graph[0],
-      height: $('.panel-body').height(),
+      height: region.$el.height(),
       padding: { top: 0.5 },
       series: [{
         data: data[0],
@@ -58,9 +60,9 @@ export default class BarGraphView extends Marionette.ItemView {
     });
   }
 
-  _configureWidth(graph) {
+  _configureWidth(graph, region) {
      graph.configure({
-      width: $('.panel-body').width(),
+      width: region.$el.width(),
     });
   }
 
@@ -79,23 +81,24 @@ export default class BarGraphView extends Marionette.ItemView {
     });
   }
 
-  _resizeGraphOnPanelSizeChange(graph) {
-      $('#main-container').on('mouseup', function() {
-        graph.configure({
-          width: $('.panel-body').width(),
-          height: $('.panel-body').height()
-        });
-
-        graph.render();
+  _resizeGraphOnPanelSizeChange(graph, region) {
+    
+    $('#main-container').on('mouseup', function() {
+      graph.configure({
+        width: region.$el.width(),
+        height: region.$el.height()
       });
 
-      $('#main-container').on('mousemove', function() {
-        graph.configure({
-          width: $('.panel-body').width(),
-          height: $('.panel-body').height()
-        });
+      graph.render();
+    });
 
-        graph.render();
-      });  
+    $('#main-container').on('mousemove', function() {
+      graph.configure({
+        width: region.$el.width(),
+        height: region.$el.height()
+      });
+
+      graph.render();
+    });  
   }
 }

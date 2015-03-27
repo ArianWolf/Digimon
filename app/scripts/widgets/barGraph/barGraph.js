@@ -3,7 +3,7 @@ import BarGraphView from './barGraphView';
 
 export default class BarGraph extends Marionette.Object {
   show(region) {
-    var barGraphView = new BarGraphView();
+    var barGraphView = new BarGraphView({'region': region});
 
     region.show(barGraphView);
   }

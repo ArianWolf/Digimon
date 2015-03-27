@@ -15,17 +15,19 @@ export default class AreaGraphView extends Marionette.ItemView {
   }
 
   onShow() {
+    var _regionPane = this.getOption('region');
+
     var seriesData = this._createRandomData();
     
-    var graph = this._createGraph(seriesData);
-    this._configureWidth(graph);
+    var graph = this._createGraph(seriesData, _regionPane);
+    this._configureWidth(graph, _regionPane);
     this._createYAxis(graph);
     this._setHoverDatail(graph);
     this._setxTicks(graph);
 
     graph.render();
 
-    this._reziseOnPanelSizeChange(graph);
+    this._reziseOnPanelSizeChange(graph, _regionPane);
 
     $('#rickshaw-slider .rickshaw-chart').data('chart', graph);
   }
@@ -41,12 +43,12 @@ export default class AreaGraphView extends Marionette.ItemView {
     return seriesData;
   }
 
-  _createGraph(seriesData) {
+  _createGraph(seriesData, region) {
     return new Rickshaw.Graph({
       element: this.ui.graph[0],
       renderer: 'multi',
       dotSize: 5,
-      height: $('.panel-body').height(),
+      height: region.$el.height(),
       padding: {
         left: 0.5
       },
@@ -60,9 +62,9 @@ export default class AreaGraphView extends Marionette.ItemView {
     });
   }
 
-  _configureWidth(graph) {
+  _configureWidth(graph, region) {
      graph.configure({
-      width: $('.panel-body').width(),
+      width: region.$el.width(),
     });
   }
 
@@ -95,11 +97,11 @@ export default class AreaGraphView extends Marionette.ItemView {
     });
   }
 
-  _reziseOnPanelSizeChange(graph){
+  _reziseOnPanelSizeChange(graph, region){
     $('#main-container').on('mouseup', function() {
       graph.configure({
-        width: $('.panel-body').width(),
-        height: $('.panel-body').height()
+        width: region.$el.width(),
+        height: region.$el.height()
       });
 
       graph.render();
@@ -107,8 +109,8 @@ export default class AreaGraphView extends Marionette.ItemView {
 
     $('#main-container').on('mousemove', function() {
       graph.configure({
-        width: $('.panel-body').width(),
-        height: $('.panel-body').height()
+        width: region.$el.width(),
+        height: region.$el.height()
       });
 
       graph.render();

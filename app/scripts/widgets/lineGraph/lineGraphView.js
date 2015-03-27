@@ -14,28 +14,28 @@ export default class BarGraphView extends Marionette.ItemView {
   }
 
   onShow() {
+    var _regionPane = this.getOption('region');
 
-    this._createGraph();
+    this._createGraph(_regionPane);
 
     var _this = this;
 
     $('#main-container').on('mouseup', function() {
-      _this._createGraph();
+      _this._createGraph(_regionPane);
     });
 
 
     $('#main-container').on('mousemove', function() { 
-      _this._createGraph();
+      _this._createGraph(_regionPane);
     });
-
   }
 
-  _createGraph() {
+  _createGraph(region) {
     new Chartist.Line('.ct-chart' , {
       labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
       series: [ [12, 9, 7, 8, 5], [2, 1, 3.5, 7, 3], [1, 3, 4, 5, 6]] }, {
       fullWidth: true,
-      height: $('.panel-body').height(),
+      height: region.$el.height(),
       chartPadding: { right: 40, top: 20}
     });
   }
