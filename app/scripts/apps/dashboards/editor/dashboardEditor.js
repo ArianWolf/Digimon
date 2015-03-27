@@ -41,13 +41,18 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
           this.listenTo(configuratorView, 'complete:configurator', (child) => {
             debugger;
 
-            var graphRegion = this.child.$('.panel-body');
-            this.widgetsContainer.barGraph.show(graphRegion);
+            
 
             var title = child.view.$('.title').val();
             this.child.$('.panel-title').html(title);
 
+            var graphRegion = this.child.regions.body;
+            var graph = new this.widgetsContainer.lineGraph();
+            graph.show(graphRegion);
+
             child.view.$el.css('display', 'none');
+
+
           }); 
         
           this.listenTo(configuratorView, 'sources:configurator', (child) => {
