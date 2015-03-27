@@ -16,16 +16,21 @@ App.module('Dashboards.Entities', function(Entities, App, Backbone){
     }
   }
 
-  class Widget extends Backbone.Model {
+  class Pane extends Backbone.Model {
     constructor(...rest) {
-      this.validation = {
-        titulo: { required: true }
-      };
+      super(...rest);
+    }
+  }
+
+  class PaneCollection extends Backbone.Collection {
+    constructor(...rest) {
+      this.model = Pane;
       super(...rest);
     }
   }
 
   Entities.Dashboard = Dashboard;
   Entities.DashboardsCollection = DashboardsCollection;
-  Entities.Widget = Widget;
+  Entities.Pane = Pane;
+  Entities.PaneCollection = PaneCollection;
 });

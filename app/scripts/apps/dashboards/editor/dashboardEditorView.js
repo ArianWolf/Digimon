@@ -2,7 +2,6 @@ import 'gridster.js/dist/jquery.gridster';
 import App from 'app';
 import EditorTemplate from 'apps/dashboards/editor/templates/editor';
 import PaneTemplate from 'apps/dashboards/editor/templates/pane';
-import widgetsContainer from '../../../widgets/widgetsContainer';
 
 App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette) {
   'use strict';
@@ -21,13 +20,6 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
       this.triggers = { 
         'click .remove': 'remove:pane',
         'click .options': 'options:pane'};
-    }
-
-    onShow() {
-      var region = this.getRegion('body');
-      var graph = new widgetsContainer.lineGraph; // jshint ignore:line
-
-      graph.show(region);
     }
   }
 
