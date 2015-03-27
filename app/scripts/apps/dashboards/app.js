@@ -10,13 +10,13 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette) {
 
   class DashboardsAPI extends Marionette.Object {
     showNewDashboard() {
-      var dashboard = new Backbone.Model();
+      var paneCollection = new Dashboards.Entities.PaneCollection();
       var dashboardEditor = new Dashboards.Editor.DashboardEditor({
         region: this.getOption('region'),
         modal: this.getOption('modal')
       });
 
-      dashboardEditor.showEditor(dashboard);
+      dashboardEditor.showEditor(paneCollection);
     }
 
     editDashboard() {

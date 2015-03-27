@@ -21,10 +21,6 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
         'click .remove': 'remove:pane',
         'click .options': 'options:pane'};
     }
-
-    onShow() {
-      debugger;
-    }
   }
 
   class DashboardEditorView extends Marionette.CompositeView {
@@ -62,5 +58,4 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
   }
 
   Views.DashboardEditorView = DashboardEditorView;
-  Views.PaneView = PaneView;
 });

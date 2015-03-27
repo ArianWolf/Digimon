@@ -9,39 +9,22 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
 
   class DashboardEditor extends Marionette.Object {
     constructor(...rest) {
-      this.panes = new Backbone.Collection();
+      this.paneCollection = null;
       this.widgetsContainer = widgetsContainer;
+      this.count = 0;
       super(...rest);
     }
 
-    showEditor(dashboard) {
+    showEditor(paneCollection) {
+      this.paneCollection = paneCollection;
       var region = this.getOption('region');
       var editorView = new Editor.Views.DashboardEditorView({
-        model: dashboard,
-        collection: this.panes
+        collection: this.paneCollection
       });
 
       this.listenTo(editorView, 'add:pane', () => {
-
-        var region = this.getOption('modal');
-        var configuratorView = new Editor.Views.ConfiguratorView();
-        region.show(configuratorView);
-         
-        this.listenTo(configuratorView, 'complete:configurator', (child) => {
-          var title = child.view.$('.title').val();
-          child.view.$el.css('display', 'none');
-          var graph = new this.widgetsContainer.barGraph;
-
-          var paneView = new Editor.Views.PaneView();
-
-          var pane = new Backbone.Model();
-          this.panes.add(pane);
-          debugger;
-          var widgetData = { titulo: title , graph: graph.show(paneView.body)};
-          var pane = new Backbone.Model(widgetData);  
-          this.panes.reset(pane);
-
-        }); 
+        var pane = new Backbone.Model;
+        this.paneCollection.add(pane);
       });
 
       this.listenTo(editorView, 'childview:remove:pane', (child) => {
@@ -49,14 +32,29 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       });
 
       this.listenTo(editorView, 'childview:options:pane', (child) => {
+          var region = this.getOption('modal');
+          var configuratorView = new Editor.Views.ConfiguratorView();
+          region.show(configuratorView);
+
+          this.child = child;
+
+          this.listenTo(configuratorView, 'complete:configurator', (child) => {
+            debugger;
+
+            var graphRegion = this.child.$('.panel-body');
+            this.widgetsContainer.barGraph.show(graphRegion);
+
+            var title = child.view.$('.title').val();
+            this.child.$('.panel-title').html(title);
+
+            child.view.$el.css('display', 'none');
+          }); 
         
           this.listenTo(configuratorView, 'sources:configurator', (child) => {
             child.view.$el.css('display', 'none');
             App.router.navigate('/app/fuentes/', { trigger: true });
           });
       });
-
-      
 
       this.listenTo(editorView, 'save:dashboard', () => {});
 

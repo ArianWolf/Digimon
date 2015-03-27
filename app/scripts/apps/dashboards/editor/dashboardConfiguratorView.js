@@ -21,6 +21,8 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
         'click .complete': 'complete:configurator',
         'click .sources': 'sources:configurator' 
       };
+
+      //this.stickit();
     }
 
     onShow() {
