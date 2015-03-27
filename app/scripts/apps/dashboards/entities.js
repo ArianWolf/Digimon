@@ -5,10 +5,6 @@ App.module('Dashboards.Entities', function(Entities, App, Backbone){
 
   class Dashboard extends Backbone.Model {
     constructor(...rest) {
-      this.validation = {
-        nombre: { required: true },
-        descripcion: { required: true }
-      };
       super(...rest);
     }
   }
