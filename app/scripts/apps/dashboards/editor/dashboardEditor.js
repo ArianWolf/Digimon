@@ -34,17 +34,15 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
         var configuratorView = new Editor.Views.ConfiguratorView();
         this.showConfigurator(configuratorView);
 
-        this.pane = child;
+        _paneChild = child;
 
         this.listenTo(configuratorView, 'complete:configurator', (child) => {
-          var title = this.getConfiguratorTitle(child);
-          this.setPaneTitle(this.pane, title);
-
-          var typeOfWidget = this.getTypeOfWidgetToShow(child);
-          var graph = this.getGraph(typeOfWidget);
-
-          var graphRegion = this.pane.getRegion('body');
-           
+          var title = this._getConfiguratorTitle(child);
+          this._setPaneTitle(:_paneChild, title);
+     
+          var graphRegion = :_paneChild._getRegion('body');
+          var typeOfWidget = this._getTypeOfWidgetToShow(child); 
+          var graph = this._getGraph(typeOfWidget);
           graph.show(graphRegion);
 
           child.view.$el.css('display', 'none');
@@ -70,26 +68,24 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       region.show(editFormView);
     }
 
-    showConfigurator(configuratorView) {
+    _showConfigurator(configuratorView) {
       var region = this.getOption('modal');
-
       region.show(configuratorView);
     }
 
-    getConfiguratorTitle(child) {
+    _getConfiguratorTitle(child) {
       return child.view.$('.title').val();
     }
 
-    setPaneTitle(pane, title) {
+    _setPaneTitle(pane, title) {
       pane.$('.panel-title').html(title);
     }
 
-    getTypeOfWidgetToShow(child) {
+    _getTypeOfWidgetToShow(child) {
       return  child.view.$('.type-widget').val();
     }
 
-    getGraph(typeOfWidget) {
-      debugger;
+    _getGraph(typeOfWidget) {
       return new this.widgetsContainer[typeOfWidget]();
     }
   }
