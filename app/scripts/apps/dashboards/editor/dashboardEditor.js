@@ -1,7 +1,7 @@
 import App from 'app';
 import './dashboardEditorView';
 import './editFormView';
-import './dashboardConfiguratorView';
+import './dashboardPaneConfiguratorView';
 import widgetsContainer from '../../../widgets/widgetsContainer';
 
 App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
@@ -11,7 +11,6 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
     constructor(...rest) {
       this.paneCollection = null;
       this.widgetsContainer = widgetsContainer;
-      this.count = 0;
       super(...rest);
     }
 
@@ -32,33 +31,29 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       });
 
       this.listenTo(editorView, 'childview:options:pane', (child) => {
-          var region = this.getOption('modal');
-          var configuratorView = new Editor.Views.ConfiguratorView();
-          region.show(configuratorView);
+        var configuratorView = new Editor.Views.ConfiguratorView();
+        this.showConfigurator(configuratorView);
 
-          this.child = child;
+        this.pane = child;
 
-          this.listenTo(configuratorView, 'complete:configurator', (child) => {
-            debugger;
+        this.listenTo(configuratorView, 'complete:configurator', (child) => {
+          var title = this.getConfiguratorTitle(child);
+          this.setPaneTitle(this.pane, title);
 
-            
+          var typeOfWidget = this.getTypeOfWidgetToShow(child);
+          var graph = this.getGraph(typeOfWidget);
 
-            var title = child.view.$('.title').val();
-            this.child.$('.panel-title').html(title);
+          var graphRegion = this.pane.getRegion('body');
+           
+          graph.show(graphRegion);
 
-            var graphRegion = this.child.regions.body;
-            var graph = new this.widgetsContainer.lineGraph();
-            graph.show(graphRegion);
-
-            child.view.$el.css('display', 'none');
-
-
-          }); 
-        
-          this.listenTo(configuratorView, 'sources:configurator', (child) => {
-            child.view.$el.css('display', 'none');
-            App.router.navigate('/app/fuentes/', { trigger: true });
-          });
+          child.view.$el.css('display', 'none');
+        }); 
+      
+        this.listenTo(configuratorView, 'sources:configurator', (child) => {
+          child.view.$el.css('display', 'none');
+          App.router.navigate('/app/fuentes/', { trigger: true });
+        });
       });
 
       this.listenTo(editorView, 'save:dashboard', () => {});
@@ -73,6 +68,29 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       var editFormView = new Editor.Views.EditFormView({ model: dashboard });
 
       region.show(editFormView);
+    }
+
+    showConfigurator(configuratorView) {
+      var region = this.getOption('modal');
+
+      region.show(configuratorView);
+    }
+
+    getConfiguratorTitle(child) {
+      return child.view.$('.title').val();
+    }
+
+    setPaneTitle(pane, title) {
+      pane.$('.panel-title').html(title);
+    }
+
+    getTypeOfWidgetToShow(child) {
+      return  child.view.$('.type-widget').val();
+    }
+
+    getGraph(typeOfWidget) {
+      debugger;
+      return new this.widgetsContainer[typeOfWidget]();
     }
   }
 

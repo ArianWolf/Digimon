@@ -4,10 +4,10 @@ import AreaGraph from './areaGraph/areaGraph';
 import LineGraph from './lineGraph/lineGraph';
 
 var container = {
-  'barGraph': BarGraph,
-  'realtimeGraph': RealtimeGraph,
-  'areaGraph': AreaGraph,
-  'lineGraph': LineGraph
+  'Grafica de Barras': BarGraph,
+  'Grafica de Tiempo Real': RealtimeGraph,
+  'Grafica de Area': AreaGraph,
+  'Grafica de Lineas': LineGraph
 };
 
 export default container;
