@@ -5,10 +5,6 @@ App.module('Dashboards.Entities', function(Entities, App, Backbone){
 
   class Dashboard extends Backbone.Model {
     constructor(...rest) {
-      this.validation = {
-        nombre: { required: true },
-        descripcion: { required: true }
-      };
       super(...rest);
     }
   }
@@ -20,6 +16,16 @@ App.module('Dashboards.Entities', function(Entities, App, Backbone){
     }
   }
 
+  class Widget extends Backbone.Model {
+    constructor(...rest) {
+      this.validation = {
+        titulo: { required: true }
+      };
+      super(...rest);
+    }
+  }
+
   Entities.Dashboard = Dashboard;
   Entities.DashboardsCollection = DashboardsCollection;
+  Entities.Widget = Widget;
 });

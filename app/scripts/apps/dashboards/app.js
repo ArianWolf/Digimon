@@ -1,7 +1,7 @@
 import App from 'app';
 import './editor/dashboardEditor';
 import './list/dashboardList';
-import './entities'
+import './entities';
 
 App.module('Dashboards', function(Dashboards, App, Backbone, Marionette) {
   'use strict';
