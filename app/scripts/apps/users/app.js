@@ -9,6 +9,7 @@ App.module('Users', function(Users, App, Backbone, Marionette) {
   // TODO: Users mocked will be added to show something on user list
   // drop them when backend be supported
   var mockedUsers = [{
+    id: '10',
     firstname: 'David',
     lastname: 'Nester',
     username: 'david',
@@ -16,6 +17,7 @@ App.module('Users', function(Users, App, Backbone, Marionette) {
     password: 'default',
     confirm: 'default'
   }, {
+    id: '11',
     firstname: 'Anne',
     lastname: 'Simons',
     username: 'anne',
