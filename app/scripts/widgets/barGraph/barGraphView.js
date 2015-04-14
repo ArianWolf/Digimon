@@ -16,7 +16,6 @@ export default class BarGraphView extends Marionette.ItemView {
 
   onShow() {
     var _regionPane = this.getOption('region');
-
     var data = this._generateRandomData();
     var graph = this._createGraph(data, _regionPane);
     this._configureWidth(graph, _regionPane);
@@ -46,7 +45,7 @@ export default class BarGraphView extends Marionette.ItemView {
     return new Rickshaw.Graph({
       renderer: 'bar',
       element: this.ui.graph[0],
-      height: region.$el.height(),
+      height: this.widgetHeight,
       padding: { top: 0.5 },
       series: [{
         data: data[0],
@@ -86,7 +85,7 @@ export default class BarGraphView extends Marionette.ItemView {
     $('#main-container').on('mouseup', function() {
       graph.configure({
         width: region.$el.width(),
-        height: region.$el.height()
+        height: region.$el.height() - 20
       });
 
       graph.render();
@@ -95,7 +94,7 @@ export default class BarGraphView extends Marionette.ItemView {
     $('#main-container').on('mousemove', function() {
       graph.configure({
         width: region.$el.width(),
-        height: region.$el.height()
+        height: region.$el.height() - 20
       });
 
       graph.render();

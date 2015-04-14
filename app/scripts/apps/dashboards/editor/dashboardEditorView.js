@@ -49,7 +49,7 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
 
     onShow() {
       this.gridster = $('.gridster ul').gridster({
-        widget_base_dimensions: [200, 200], // jshint ignore:line
+        widget_base_dimensions: [350, 300], // jshint ignore:line
         resize: {
           enabled: true
         }
