@@ -90,7 +90,7 @@ export default class RealtimeGraphView extends Marionette.ItemView {
     $('#main-container').on('mouseup', function() {
       graph.configure({
         width: region.$el.width(),
-        height: region.$el.height()
+        height: region.$el.height()-80
       });
 
       graph.render();
@@ -99,7 +99,7 @@ export default class RealtimeGraphView extends Marionette.ItemView {
     $('#main-container').on('mousemove', function() {
       graph.configure({
         width: region.$el.width(),
-        height: region.$el.height()
+        height: region.$el.height()-80
       });
 
       graph.render();
