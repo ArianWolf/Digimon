@@ -19,7 +19,8 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
       
       this.triggers = { 
         'click .remove': 'remove:pane',
-        'click .options': 'options:pane'};
+        'click .options': 'options:pane'
+      };
     }
   }
 

@@ -39,7 +39,7 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette){
       appRoutes: {
         'app/dashboard/': 'showDashboardList',
         'app/dashboard/crear/': 'showNewDashboard',
-        'app/dashboard/editar/': 'editDashboard',
+        'app/dashboard/nuevo/': 'editDashboard',
         'app/dashboard/crear/configurar/': 'configurePane'
       }
     });
