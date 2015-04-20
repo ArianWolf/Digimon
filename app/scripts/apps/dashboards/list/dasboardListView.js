@@ -11,6 +11,13 @@ App.module('Dashboards.List.Views', function (Views, App, Backbone, Marionette) 
       this.template = tableItemTemplate;
       super(...rest);
     }
+    initialize() {
+      
+      this.triggers = { 
+        'click .removeItem': 'remove:item',
+        'click .editItem': 'edit:dashboard:item'
+      };
+    }
   }
 
   class DashboardListView extends Marionette.CompositeView {
@@ -18,6 +25,7 @@ App.module('Dashboards.List.Views', function (Views, App, Backbone, Marionette) 
       this.childView = DashboardItemView;
       this.childViewContainer = 'tbody';
       this.template = tableTemplate;
+
       super(...rest);
     }
   }

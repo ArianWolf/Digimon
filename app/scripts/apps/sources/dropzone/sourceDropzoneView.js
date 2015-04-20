@@ -51,7 +51,7 @@ App.module('Sources.Dropzone.Views', function(Views, App, Backbone, Marionette) 
       });
 
       // Hide the total progress bar when nothing's uploading anymore
-      myDropzone.on('queuecomplete', function(progress) {
+      myDropzone.on('queuecomplete', function() {
       document.querySelector('#total-progress').style.opacity = '0';
       }); 
            
