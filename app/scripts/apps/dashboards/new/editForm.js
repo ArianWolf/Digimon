@@ -1,6 +1,5 @@
 import App from 'app';
 import './editFormView';
-import DashboardList from 'apps/dashboards/list/dashboardList';
 
 App.module('Dashboards.New', function(New, App, Backbone, Marionette) {
   'use strict';
@@ -30,7 +29,7 @@ App.module('Dashboards.New', function(New, App, Backbone, Marionette) {
       return {
         name: child.view.$('#name').val(),
         description: child.view.$('#description').val()
-      }
+      };
     }
   }
 

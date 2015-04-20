@@ -33,7 +33,6 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette) {
     }
 
     showDashboardList() {
-      debugger;
       var dashboardList = new Dashboards.List.DashboardList({
         region: this.getOption('region')
       });
