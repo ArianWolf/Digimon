@@ -6,6 +6,7 @@ App.module('Sesion.Login', function(Login, App, Backbone, Marionette) {
 
   class SesionLogin extends Marionette.Object {
     constructor(...rest) {
+      
       super(...rest);
     }
 

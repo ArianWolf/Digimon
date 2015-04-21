@@ -7,34 +7,38 @@
           <p class="p-t-35">Identificate o registrate</p>
           <!-- START Login Form -->
             <!-- START Form Control-->
-            <div class="form-group form-group-default">
-              <label>Usuario</label>
-              <div class="controls">
-                <input type="text" name="username" placeholder="Nombre de usuario" class="form-control" required>
-              </div>
-            </div>
-            <!-- END Form Control-->
-            <!-- START Form Control-->
-            <div class="form-group form-group-default">
-              <label>Cotraseña</label>
-              <div class="controls">
-                <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
-              </div>
-            </div>
-            <!-- START Form Control-->
-            <div class="row">
-              <div class="col-md-5 no-padding checkbox-margin">
-                <div class="checkbox ">
-                  <input type="checkbox" value="1" id="checkbox1">
-                  <label for="checkbox1">Mantenerme dentro</label>
+            <form id="login">
+              <div class="form-group form-group-default">
+                <label>Usuario</label>
+                <div class="controls">
+                  <input id="username" type="text" name="username" placeholder="Nombre de usuario" class="form-control" required>
                 </div>
               </div>
-              <div class="col-md-6 text-right">
-                <a href="#" class="text-info small">Registrarse</a>
+              <!-- END Form Control-->
+              <!-- START Form Control-->
+              <div class="form-group form-group-default">
+                <label>Cotraseña</label>
+                <div class="controls">
+                  <input id="password" type="password" class="form-control" name="password" placeholder="Contraseña" required>
+                </div>
               </div>
-            </div>
+              <!-- START Form Control-->
+              <div class="row">
+                <div class="col-md-5 no-padding">
+                  <div class="checkbox ">
+                    <input type="checkbox" value="1" id="checkbox1">
+                    <label for="checkbox1">Mantenerme dentro</label>
+                  </div>
+                </div>
+                <div class="col-md-6 text-right">
+                  <a href="#" class="text-info small">Registrarse</a>
+                </div>
+              </div>
+
+              </form>
+              <a href="../"><button id="singin" class="btn btn-primary btn-cons m-t-10">Sign in</button></a> 
             <!-- END Form Control-->
-            <button class="btn btn-primary btn-cons m-t-10" type="submit">Sign in</button>
+              
           <!--END Login Form-->
           <div class="pull-bottom sm-pull-bottom">
             <div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
@@ -43,5 +47,4 @@
         </div>
       </div>
       <!-- END Login Right Container-->
-  
     <!-- END PAGE CONTAINER -->
