@@ -10,6 +10,10 @@ App.module('Sesion', function(Sesion, App, Backbone, Marionette){
       this._loadModuleAndRun('login');
     }
 
+    register() {
+      this._loadModuleAndRun('register');
+    }
+
     _loadModuleAndRun(action, ...rest) {
       require(['apps/sesion/app'], function() {
         App.startSubApp('Sesion', {
@@ -24,7 +28,8 @@ App.module('Sesion', function(Sesion, App, Backbone, Marionette){
     new Marionette.AppRouter({
       controller: new SesionController(),
       appRoutes: {
-        'app/login/': 'login'
+        'app/login/': 'login',
+        'app/registrar/': 'register'
       }
     });
   });

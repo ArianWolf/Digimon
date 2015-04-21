@@ -1,5 +1,5 @@
 import App from 'app';
-import './login/login';
+import './register/register';
 
 
 App.module('Sesion', function(Sesion, App, Backbone, Marionette) {
@@ -10,10 +10,19 @@ App.module('Sesion', function(Sesion, App, Backbone, Marionette) {
   class SesionAPI extends Marionette.Object {
     login() {
       var login = new Sesion.Login.SesionLogin({
-        region: this.getOption('region'),
+        region: this.getOption('region')
       });
 
       login.showLogin();
+    }
+
+    register() {
+      debugger;
+      var register = new Sesion.Register.SesionRegister({
+        region: this.getOption('region')
+      });
+
+      register.showRegister();
     }
   }
 
