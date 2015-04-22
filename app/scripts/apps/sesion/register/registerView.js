@@ -8,14 +8,12 @@ App.module('Sesion.Register.Views', function (Views, App, Backbone, Marionette) 
   class RegisterView extends Marionette.ItemView {
     constructor(...rest) {
       this.template = RegisterTemplate;
+      this.triggers = { 'click #register-button': 'register:sesion' };
       super(...rest);
     }
 
     onShow() {
     }
-
-
-
   }
   Views.RegisterView = RegisterView;
 });

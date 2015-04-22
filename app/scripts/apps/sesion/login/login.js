@@ -10,7 +10,7 @@ App.module('Sesion.Login', function(Login, App, Backbone, Marionette) {
       super(...rest);
     }
 
-    showLogin(dashboards) {
+    showLogin() {
       var region = this.getOption('region');
       var loginView = new Login.Views.LoginView();
 

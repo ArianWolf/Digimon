@@ -1,4 +1,5 @@
 import App from 'app';
+import './login/login';
 import './register/register';
 
 
@@ -17,7 +18,6 @@ App.module('Sesion', function(Sesion, App, Backbone, Marionette) {
     }
 
     register() {
-      debugger;
       var register = new Sesion.Register.SesionRegister({
         region: this.getOption('region')
       });
