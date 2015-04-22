@@ -216,7 +216,7 @@ gulp.task('test', function(callback) {
 // Run development server environmnet
 gulp.task('serve', ['webpack', 'server', 'connect', 'watch'], function () {
   // TODO: Change this to the root URL when login/logout is implemented
-  require('opn')('http://localhost:9000/app');
+  require('opn')('http://localhost:9000/app/login');
 });
 
 // Watch files for changes & reload

@@ -1,4 +1,4 @@
-import 'sweetalert/lib/sweet-alert.css'
+import 'sweetalert/lib/sweet-alert.css';
 import Sweetalert from 'sweetalert';
 import App from 'app';
 import './dasboardListView';
@@ -14,31 +14,30 @@ App.module('Dashboards.List', function(List, App, Backbone, Marionette) {
       });
 
       this.listenTo(listView, 'childview:remove:item', (child) => {
-        debugger;
         this.sweetalertRemove(child);
-        
       });
+      
       region.show(listView);
     } 
 
     sweetalertRemove(child) {
       Sweetalert({
-        title: "¿Esta seguro?",
-        text: "Este registro se borrara permanentemente",
-        type: "warning",
+        title: '¿Esta seguro?',
+        text: 'Este registro se borrara permanentemente',
+        type: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Si, Borrarlo",
-        cancelButtonText: "No, Cancelar",
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'Si, Borrarlo',
+        cancelButtonText: 'No, Cancelar',
         closeOnConfirm: false,
         closeOnCancel: false
         }, 
         function(isConfirm) {
           if (isConfirm) {
-            Sweetalert("¡Borrado!", "El registro ha sido borrado.", "success");
+            Sweetalert('¡Borrado!', 'El registro ha sido borrado.', 'success');
             child.model.destroy();
           } else {
-            Sweetalert("¡Cancelado!", "Su archivo esta a salvo :)", "error");
+            Sweetalert('¡Cancelado!', 'Su archivo esta a salvo :)', 'error');
         }
       });
     }
