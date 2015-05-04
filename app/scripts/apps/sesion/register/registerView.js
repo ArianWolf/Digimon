@@ -13,6 +13,28 @@ App.module('Sesion.Register.Views', function (Views, App, Backbone, Marionette) 
     }
 
     onShow() {
+      this.validationForm();
+    }
+
+    validationForm() {
+      $('#form-personal').validate({
+        rules: {
+          firstName: 'required',
+          lastName: 'required',
+          username: 'required',
+          password: 'required',
+          confirm: 'required',
+          email: 'required'
+        },
+        messages: {
+          firstName: 'Introduzca nombre',
+          lastName: 'introduzca Apellido',
+          username: 'Introduzca nombre de usuario',
+          password: 'Introduzca contraseña',
+          confirm: 'Confirme contraseña',
+          email: 'introduzca E-mail'
+        }
+      });
     }
   }
   Views.RegisterView = RegisterView;
