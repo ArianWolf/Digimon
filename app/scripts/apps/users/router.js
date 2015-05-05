@@ -22,6 +22,10 @@ App.module('Users', function(Users, App, Backbone, Marionette){
       this._loadModuleAndRun('deleteUser', userId);
     }
 
+    showProfile() {
+      this._loadModuleAndRun('showPorfile');
+    }
+
     _loadModuleAndRun(action, ...rest) {
       require(['apps/users/app'], function() {
         App.startSubApp('Users', {
@@ -39,7 +43,8 @@ App.module('Users', function(Users, App, Backbone, Marionette){
         'app/usuarios/': 'listAllUsers',
         'app/usuarios/crear/': 'showNewUser',
         'app/usuarios/:id/editar/': 'showUserById',
-        'app/usuarios/:id/eliminar/': 'deleteUser'
+        'app/usuarios/:id/eliminar/': 'deleteUser',
+        'app/usuarios/perfil/': 'showProfile'
       }
     });
   });

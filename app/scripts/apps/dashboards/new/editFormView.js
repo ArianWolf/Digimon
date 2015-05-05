@@ -10,9 +10,6 @@ App.module('Dashboards.New.Views', function (Views, App, Backbone, Marionette) {
       this.triggers = { 'click #save': 'save:edit' };
       super(...rest);
     }
-
-    onshow () {
-    }
   }
 
   Views.EditFormView = EditFormView;

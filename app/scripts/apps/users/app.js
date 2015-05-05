@@ -84,6 +84,12 @@ App.module('Users', function(Users, App, Backbone, Marionette) {
 
       userEditor.showUser(user);
     }
+    
+    showProfile(){
+      var userProfile = new Users.Profile.UserProfile({ region: this.getOption('region') });
+
+      userProfile.showUserProfile();
+    }
   }
 
   Users.on('start', function(options) {
