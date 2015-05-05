@@ -12,5 +12,4 @@ export default class AppLayout extends Marionette.LayoutView {
     };
     super(...rest);
   }
-
 }
