@@ -7,9 +7,14 @@ App.module('Mainpage.Home', function(Home, App, Backbone, Marionette) {
   class MainPageHome extends Marionette.Object {
     showHome() {
       var region = this.getOption('region');
-      var homeView = new Home.Views.HomeView();
-
+      var homeView = new Home.Views.HomeLayoutView();
       region.show(homeView);
+
+      var regionCollection = homeView.getOption('itemContainer');
+      var homeColletionView = new Home.Views.HomeCollectionView({
+      	collection: this.getOption('collection')});
+      
+      regionCollection.show(homeColletionView);
     }
   }
 
