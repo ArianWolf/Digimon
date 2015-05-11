@@ -4,17 +4,17 @@ import ConfiguratorTemplate from 'apps/dashboards/editor/templates/paneConfigura
 App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette) {
   'use strict';
 
-  class ConfiguratorView extends Marionette.ItemView {
+  class ConfiguratorView extends Marionette.LayoutView {
     constructor(...rest) {
-      super(...rest);
-    }
-
-    initialize() {
+      this.regions = { preview: '.preview-zone'};
       this.template = ConfiguratorTemplate; 
+      
       this.triggers = { 
         'click .complete': 'complete:configurator',
-        'click .sources': 'sources:configurator' 
+        'click .sources': 'sources:configurator',
+        'click .widget-preview': 'widgetPreview:configurator'
       };
+      super(...rest);
     }
 
     onShow() {

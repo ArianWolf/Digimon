@@ -14,6 +14,7 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
     }
 
     showEditor(paneCollection) {
+      var _this = this;
       this.paneCollection = paneCollection;
       var region = this.getOption('region');
       var editorView = new Editor.Views.DashboardEditorView({
@@ -32,8 +33,31 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       this.listenTo(editorView, 'childview:options:pane', (child) => {
         var configuratorView = new Editor.Views.ConfiguratorView();
         this._showConfigurator(configuratorView);
-
         var _paneChild = child;
+        
+        configuratorView.$('.type-widget').on('change', function() {
+          debugger;
+          var typeOfWidget = configuratorView.$('.type-widget').val();
+          var prev = configuratorView.getRegion('preview');
+          var graph = _this._getGraph(typeOfWidget);
+          graph.show(prev);
+        });
+        
+        configuratorView.$('.title').on('keyup' , function() {
+          debugger;
+          var title = configuratorView.$('.title').val();
+          configuratorView.$('.title-zone').empty();
+          configuratorView.$('.title-zone').append(title);
+        });
+
+
+        this.listenTo(configuratorView, 'widgetPreview:configurator', (child) => {
+          var graphRegion = child.view.getRegion('preview');
+          var typeOfWidget = this._getTypeOfWidgetToShow(child); 
+          var graph = this._getGraph(typeOfWidget);
+          graph.show(graphRegion);
+
+        });
 
         this.listenTo(configuratorView, 'complete:configurator', (child) => {
           var title = this._getConfiguratorTitle(child);
