@@ -11,8 +11,7 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
       
       this.triggers = { 
         'click .complete': 'complete:configurator',
-        'click .sources': 'sources:configurator',
-        'click .widget-preview': 'widgetPreview:configurator'
+        'click .sources': 'sources:configurator'
       };
       super(...rest);
     }

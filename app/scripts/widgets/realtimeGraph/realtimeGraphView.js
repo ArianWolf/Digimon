@@ -19,9 +19,12 @@ export default class RealtimeGraphView extends Marionette.ItemView {
   onShow() {
     var _regionPane = this.getOption('region');
 
+    var _color1 = this.getOption('color1');
+    var _color2 = this.getOption('color2');
+
     var data = this._getRandomData();
 
-    var graph = this._createGraph(data, _regionPane);
+    var graph = this._createGraph(data, _regionPane, _color1, _color2);
     this._createYAxis(graph);
     this._setHoverDetails(graph);
 
@@ -43,7 +46,7 @@ export default class RealtimeGraphView extends Marionette.ItemView {
     return data;
   }
 
-  _createGraph(data, region) {
+  _createGraph(data, region, color1, color2) {
     return new Rickshaw.Graph({
       element: this.ui.graph[0],
       height: region.$el.height(),
@@ -51,11 +54,11 @@ export default class RealtimeGraphView extends Marionette.ItemView {
       padding: { top: 0.5 },
       series: [{
         data: data[0],
-        color: 'steelblue', 
+        color: color1, 
         name: 'DB Server'
       }, {
         data: data[1],
-        color: 'lightblue', 
+        color: color2, 
         name: 'Web Server'
       }]
     });

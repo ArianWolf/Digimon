@@ -15,8 +15,12 @@ export default class BarGraphView extends Marionette.ItemView {
 
   onShow() {
     var _regionPane = this.getOption('region');
+
+    var color = this.getOption('color');
+    var color2 = this.getOption('color2');
+    
     var data = this._generateRandomData();
-    var graph = this._createGraph(data, _regionPane);
+    var graph = this._createGraph(data, _regionPane, color, color2);
     this._configureWidth(graph, _regionPane);
     this._setToolTipHover(graph);
 
@@ -40,7 +44,7 @@ export default class BarGraphView extends Marionette.ItemView {
     return seriesData;
   }
 
-  _createGraph(data, region) {
+  _createGraph(data, region, color, color2) {
     return new Rickshaw.Graph({
       renderer: 'bar',
       element: this.ui.graph[0],
@@ -48,11 +52,11 @@ export default class BarGraphView extends Marionette.ItemView {
       padding: { top: 0.5 },
       series: [{
         data: data[0],
-        color: 'steelblue',
+        color: color,
         name: 'New users'
       },{
         data: data[1],
-        color: 'lightblue',
+        color: color2,
         name: 'Returning users'
       }]
     });
