@@ -10,6 +10,11 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
     constructor(...rest) {
       this.paneCollection = null;
       this.widgetsContainer = widgetsContainer;
+      this.colorPalette = {
+        red: 'red',
+        blue: 'blue',
+        green: 'green'
+      }
       super(...rest);
     }
 
@@ -36,7 +41,6 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
         var _paneChild = child;
         
         configuratorView.$('.type-widget').on('change', function() {
-          debugger;
           var typeOfWidget = configuratorView.$('.type-widget').val();
           var prev = configuratorView.getRegion('preview');
           var graph = _this._getGraph(typeOfWidget);
@@ -44,7 +48,6 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
         });
         
         configuratorView.$('.title').on('keyup' , function() {
-          debugger;
           var title = configuratorView.$('.title').val();
           configuratorView.$('.title-zone').empty();
           configuratorView.$('.title-zone').append(title);
