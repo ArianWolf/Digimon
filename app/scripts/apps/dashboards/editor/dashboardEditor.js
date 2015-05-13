@@ -1,5 +1,3 @@
-import 'colpick/js/colpick';
-import 'colpick/css/colpick.css';
 import App from 'app';
 import './dashboardEditorView';
 import './dashboardPaneConfiguratorView';
@@ -20,6 +18,7 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       }
       this.color1 = 'steelblue';
       this.color2 = 'lightblue';
+      this.currentPane = null;
       super(...rest);
     }
 
@@ -27,63 +26,66 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       var _this = this;
       this.paneCollection = paneCollection;
       var region = this.getOption('region');
+
+      //create main view container and show it
+      var editorLayoutView = new Editor.Views.EditorLayoutView();
+      region.show(editorLayoutView);
+      
+      var editorRegion = editorLayoutView.getRegion('editorContainer');
+      //create editorView and show it
       var editorView = new Editor.Views.DashboardEditorView({
         collection: this.paneCollection
       });
+      editorRegion.show(editorView);
 
-      region.show(editorView);
+      //listener for show title in preview
+      editorLayoutView.$('.title').on('keyup' , function() {
+        var title = editorLayoutView.$('.title').val();
+        editorLayoutView.$('.title-zone').empty();
+        editorLayoutView.$('.title-zone').append(title);
+      });
 
-      editorView.$('#picker').colpick();
+      //listener for show graph in preview
+      editorLayoutView.$('.type-widget').on('change', function() {
+        var typeOfWidget = editorLayoutView.$('.type-widget').val();
+        var prev = editorLayoutView.getRegion('preview');
+        var graph = _this._getGraph(typeOfWidget);
+        graph.show(prev, _this.color1, _this.color2);
+      });
 
+      //add a new pane
       this.listenTo(editorView, 'add:pane', () => {
         var pane = new Backbone.Model();
         this.paneCollection.add(pane);
       });
 
+      this._colorListener(editorLayoutView);
+
+      //remove a pane selected
       this.listenTo(editorView, 'childview:remove:pane', (child) => {
         child.model.destroy();
       });
 
-      this.listenTo(editorView, 'childview:options:pane', (child) => {
-        var configuratorView = new Editor.Views.ConfiguratorView();
-        this._showConfigurator(configuratorView);
-        var _paneChild = child;
+      this.listenTo(editorView, 'childview:options:pane', (pane) => {
+        editorLayoutView.$('#myModal').modal('show');
+        this.currentPane = pane;
+      });
 
-        configuratorView.$('.title').on('keyup' , function() {
-          var title = configuratorView.$('.title').val();
-          configuratorView.$('.title-zone').empty();
-          configuratorView.$('.title-zone').append(title);
-        });
-        
-        configuratorView.$('.type-widget').on('change', function() {
-          var typeOfWidget = configuratorView.$('.type-widget').val();
-          var prev = configuratorView.getRegion('preview');
-          var graph = _this._getGraph(typeOfWidget);
-          graph.show(prev, _this.color1, _this.color2);
-        });
+      editorLayoutView.$('.complete').on('click', function() {
+        var title = editorLayoutView.$('.title').val();
+        _this._setPaneTitle(_this.currentPane, title);
+   
+        var graphRegion = _this.currentPane.getRegion('body');
+        var typeOfWidget = editorLayoutView.$('.type-widget').val();
+        var graph = _this._getGraph(typeOfWidget);
+        graph.show(graphRegion, _this.color1, _this.color2);
 
-        this._colorListener(configuratorView);
-
-        this.listenTo(configuratorView, 'complete:configurator', (child) => {
-          var title = this._getConfiguratorTitle(child);
-          this._setPaneTitle(_paneChild, title);
-     
-          var graphRegion = _paneChild.getRegion('body');
-          var typeOfWidget = this._getTypeOfWidgetToShow(child); 
-          var graph = this._getGraph(typeOfWidget);
-          graph.show(graphRegion, this.color1, this.color2);
-
-          child.view.$el.css('display', 'none');
-        }); 
+        editorLayoutView.$('#myModal').modal('hide');
       });
 
       this.listenTo(editorView, 'save:dashboard', () => {
         App.router.navigate('/app/dashboard/nuevo/', { trigger: true });
       });
-
-      region.show(editorView);
-
-
     }
 
     _printColor(configuratorView, color1, color2) {
