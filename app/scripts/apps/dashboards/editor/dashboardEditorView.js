@@ -2,8 +2,8 @@ import 'gridster.js/dist/jquery.gridster';
 import App from 'app';
 import EditorTemplate from 'apps/dashboards/editor/templates/editor';
 import PaneTemplate from 'apps/dashboards/editor/templates/pane';
-import PaneConfigurator from 'apps/dashboards/editor/templates/paneConfigurator';
 import EditorLayout from 'apps/dashboards/editor/templates/editorLayout';
+import PreviewEmpty from 'apps/dashboards/editor/templates/previewEmpty';
 
 App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette) {
   'use strict';
@@ -72,7 +72,15 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
     }
   }
 
+  class PreviewEmptyView extends Marionette.ItemView {
+    constructor(...rest) {
+      this.className = 'empty-preview';
+      this.template = PreviewEmpty; 
+      super(...rest);
+    }
+  }
 
+  Views.PreviewEmptyView = PreviewEmptyView;
   Views.EditorLayoutView = EditorLayoutView;
   Views.DashboardEditorView = DashboardEditorView;
 });

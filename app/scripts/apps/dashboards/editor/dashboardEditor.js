@@ -1,6 +1,5 @@
 import App from 'app';
 import './dashboardEditorView';
-import './dashboardPaneConfiguratorView';
 import widgetsContainer from '../../../widgets/widgetsContainer';
 
 App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
@@ -38,25 +37,24 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       });
       editorRegion.show(editorView);
 
+      //render preview empty for first time
+      this._renderEmptyPreviewView(editorLayoutView);
+
       //listener for show title in preview
-      editorLayoutView.$('.title').on('keyup' , function() {
-        var title = editorLayoutView.$('.title').val();
-        editorLayoutView.$('.title-zone').empty();
-        editorLayoutView.$('.title-zone').append(title);
-      });
+      this._showTitleOnPreview(editorLayoutView);
 
       //listener for show graph in preview
-      editorLayoutView.$('.type-widget').on('change', function() {
-        var typeOfWidget = editorLayoutView.$('.type-widget').val();
-        var prev = editorLayoutView.getRegion('preview');
-        var graph = _this._getGraph(typeOfWidget);
-        graph.show(prev, _this.color1, _this.color2);
-      });
+      this._showWidgetOnPreview(editorLayoutView, _this)
 
       //add a new pane
       this.listenTo(editorView, 'add:pane', () => {
         var pane = new Backbone.Model();
         this.paneCollection.add(pane);
+      });
+
+      //redirect to save dashboard save
+      this.listenTo(editorView, 'save:dashboard', () => {
+        App.router.navigate('/app/dashboard/nuevo/', { trigger: true });
       });
 
       this._colorListener(editorLayoutView);
@@ -65,98 +63,126 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       this.listenTo(editorView, 'childview:remove:pane', (child) => {
         child.model.destroy();
       });
-
+      //clean the configurator when other pane is selected
       this.listenTo(editorView, 'childview:options:pane', (pane) => {
         editorLayoutView.$('#myModal').modal('show');
+        
+        if(pane != this.currentPane) {
+          editorLayoutView.$('.title').val('');
+          editorLayoutView.$('.title-zone').empty();
+          this.color1 = 'steelblue';
+          this.color2 = 'lightblue';
+
+          this._renderEmptyPreviewView(editorLayoutView);
+        } 
+
         this.currentPane = pane;
       });
 
+      //Set to the selected pane, the information from configurator
       editorLayoutView.$('.complete').on('click', function() {
-        var title = editorLayoutView.$('.title').val();
-        _this._setPaneTitle(_this.currentPane, title);
-   
-        var graphRegion = _this.currentPane.getRegion('body');
-        var typeOfWidget = editorLayoutView.$('.type-widget').val();
-        var graph = _this._getGraph(typeOfWidget);
-        graph.show(graphRegion, _this.color1, _this.color2);
-
-        editorLayoutView.$('#myModal').modal('hide');
+        _this._printInformationOnPane(editorLayoutView, _this);
       });
-
-      this.listenTo(editorView, 'save:dashboard', () => {
-        App.router.navigate('/app/dashboard/nuevo/', { trigger: true });
+    
+      editorLayoutView.$('.modal').on('keyup', function(event) {
+        if(event.keyCode === 13) {
+          _this._printInformationOnPane(editorLayoutView, _this);
+        }
       });
-    }
+    }  
 
-    _printColor(configuratorView, color1, color2) {
-        var graphRegion = configuratorView.getRegion('preview');
-        var typeOfWidget = configuratorView.$('.type-widget').val();
+    _printColor(View, color1, color2) {
+        var graphRegion = View.getRegion('preview');
+        var typeOfWidget = View.$('.type-widget').val();
         var graph = this._getGraph(typeOfWidget);
         graph.show(graphRegion, color1, color2);
-    }
-
-    _showConfigurator(configuratorView) {
-      var region = this.getOption('modal');
-      region.show(configuratorView);
-    }
-
-    _getConfiguratorTitle(child) {
-      return child.view.$('.title').val();
     }
 
     _setPaneTitle(pane, title) {
       pane.$('.panel-title').html(title);
     }
 
-    _getTypeOfWidgetToShow(child) {
-      return  child.view.$('.type-widget').val();
-    }
-
     _getGraph(typeOfWidget) {
       return new this.widgetsContainer[typeOfWidget]();
     }
 
-    _colorListener(configuratorView) {
+    _renderEmptyPreviewView(view) {
+      var previewEmptyView = new Editor.Views.PreviewEmptyView();
+      var previewEmptyRegion = view.getRegion('preview');
+      previewEmptyRegion.show(previewEmptyView);
+    }
+
+    _showTitleOnPreview(view) {
+      view.$('.title').on('keyup' , function() {
+        var title = view.$('.title').val();
+        view.$('.title-zone').empty();
+        view.$('.title-zone').append(title);
+      });
+    }
+
+    _showWidgetOnPreview(view, _this) {
+      view.$('.type-widget').on('change', function() {
+        var typeOfWidget = view.$('.type-widget').val();
+        var preview = view.getRegion('preview');
+        var graph = _this._getGraph(typeOfWidget);
+        graph.show(preview, _this.color1, _this.color2);
+      });
+    }
+
+    _printInformationOnPane(view, _this) {
+        var title = view.$('.title').val();
+        _this._setPaneTitle(_this.currentPane, title);
+   
+        var graphRegion = _this.currentPane.getRegion('body');
+        var typeOfWidget = view.$('.type-widget').val();
+        var graph = _this._getGraph(typeOfWidget);
+        graph.show(graphRegion, _this.color1, _this.color2);
+
+        view.$('#myModal').modal('hide');
+    }
+
+    _colorListener(View) {
       var _this = this;
 
-      configuratorView.$('#red1').on('click', function() {
+      View.$('#red1').on('click', function() {
+        debugger;
         _this.color1 = _this.colorPalette['red'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
+        _this._printColor(View, _this.color1, _this.color2);
       });
 
-      configuratorView.$('#blue1').on('click', function() {
+      View.$('#blue1').on('click', function() {
         _this.color1 = _this.colorPalette['blue'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
+        _this._printColor(View, _this.color1, _this.color2);
       });
 
-      configuratorView.$('#green1').on('click', function() {
+      View.$('#green1').on('click', function() {
         _this.color1 = _this.colorPalette['green'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
+        _this._printColor(View, _this.color1, _this.color2);
       });
 
-      configuratorView.$('#pink1').on('click', function() {
+      View.$('#pink1').on('click', function() {
         _this.color1 = _this.colorPalette['pink'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
+        _this._printColor(View, _this.color1, _this.color2);
       });
 
-      configuratorView.$('#red2').on('click', function() {
+      View.$('#red2').on('click', function() {
         _this.color2 = _this.colorPalette['red'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
+        _this._printColor(View, _this.color1, _this.color2);
       });
 
-      configuratorView.$('#blue2').on('click', function() {
+      View.$('#blue2').on('click', function() {
         _this.color2 = _this.colorPalette['blue'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
+        _this._printColor(View, _this.color1, _this.color2);
       });
 
-      configuratorView.$('#green2').on('click', function() {
+      View.$('#green2').on('click', function() {
         _this.color2 = _this.colorPalette['green'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
+        _this._printColor(View, _this.color1, _this.color2);
       });
 
-      configuratorView.$('#pink2').on('click', function() {
+      View.$('#pink2').on('click', function() {
         _this.color2 = _this.colorPalette['pink'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
+        _this._printColor(View, _this.color1, _this.color2);
       });
     }
   }
