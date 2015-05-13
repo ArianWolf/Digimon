@@ -1,3 +1,109 @@
 <button type="button" class="btn btn-complete btn-cons add">Agregar</button>
 <button type="button" class="btn btn-complete btn-cons save">Guardar</button>
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+Launch demo modal
+</button>
+<!-- Modal -->
+<div class="modal fade slide-up disable-scroll" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel" aria-hidden="false">
+  <div class="modal-dialog ">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          	<i class="pg-close fs-14"></i>
+          </button>
+          <h5 class="text-left p-b-5"><span class="semi-bold"><center>Configura tu Widget</center></span></h5>
+          <hr>
+
+        </div>
+        <div class="modal-body">
+        	<div class="row width-1200">
+        	<div class="col-md-6 margin-top-5-per padding-left-5-per">
+        		<!--Tittle of Widget-->
+	          <br>
+	          <div class="row">
+	            <div class="col-md-7">
+	              <h5 class="text-left p-b-5"><span class="semi-bold"><strong>Escriba un titulo para la el Widget</strong></span></h5>
+	            </div>
+	            <div class="col-md-5">
+	              <input type="text" placeholder="Titulo del Widget" class="form-control bgc-gray title" id="titulo" name="icon-filter">
+	            </div>
+	          </div>
+	          <!--Type of Source-->
+	          <div class="row">
+	            <div class="col-md-7">
+	              <h5 class="text-left p-b-5"><span class="semi-bold"><strong>Seleecionar tipo de Widget</strong></span></h5>
+	            </div>
+	            <div class="form-group col-md-5">
+	              <select class="form-control bgc-gray type-source">
+	                <option>Fuente 1</option>
+	                <option>Fuente 2</option>
+	                <option>Fuente 3</option>
+	                <option>Fuente 4</option>
+	              </select>
+	            </div>
+	          </div>
+	          <!--Type of Widget-->
+	          <div class="row">
+	            <div class="col-md-7">
+	              <h5 class="text-left p-b-5"><span class="semi-bold"><strong>Seleecionar tipo de Widget</strong></span></h5>
+	            </div>
+	            <div class="form-group col-md-5">
+	              <select class="form-control bgc-gray type-widget">
+	                <option>Grafica de Barras</option>
+	                <option>Grafica de Lineas</option>
+	                <option>Grafica de Area</option>
+	                <option>Grafica de Tiempo Real</option>
+	              </select>
+	            </div>
+	          </div>
+	          <!--palette of colors-->
+	          <div class="row">
+	            <div class="col-md-7">
+	              <h5 class="text-left p-b-5"><span class="semi-bold"><strong>Selecciona el color 1</strong></span></h5>
+	            </div>
+	            <div class="color-palette col-md-5">
+	              <button id='red1' class="red"></button>
+	              <button id='blue1' class="blue"></button>
+	              <button id='green1' class="green"></button>
+	              <button id='pink1' class="pink"></button>
+	            </div>
+	          </div>
+	          <div class="row">
+	            <div class="col-md-7">
+	              <h5 class="text-left p-b-5"><span class="semi-bold"><strong>Selecciona el color 2</strong></span></h5>
+	            </div>
+	            <div class="color-palette col-md-5">
+	              <button id='red2' class="red"></button>
+	              <button id='blue2' class="blue"></button>
+	              <button id='green2' class="green"></button>
+	              <button id='pink2' class="pink"></button>
+	            </div>
+	          </div>
+	          <!--Complete Button-->
+	          <div class="row">
+	            <div class="col-md-9 col-sm-9 col-xs-6"></div>
+	            <div class="col-md-3 col-sm-3 col-xs-4">
+	              <button class="btn btn-success btn-cons complete">Complete</button>
+	            </div>
+	          </div>
+        	</div>
+        	<div class="col-md-6">
+        		<div class="preview margin-left-10-per"><strong>PREVIEW</strong></div> 
+          	<div class="general-container margin-left-7-per">
+            
+	            <div class="title-zone"></div>
+	            <div class="preview-zone"></div>
+          	</div>
+        	</div>
+         	</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.modal-content -->
+</div>
+</div>
+<!-- /.modal-dialog -->
 <ul class="list-unstyled"></ul>

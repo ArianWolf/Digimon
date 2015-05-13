@@ -1,3 +1,5 @@
+import 'colpick/js/colpick';
+import 'colpick/css/colpick.css';
 import App from 'app';
 import './dashboardEditorView';
 import './dashboardPaneConfiguratorView';
@@ -28,6 +30,10 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       var editorView = new Editor.Views.DashboardEditorView({
         collection: this.paneCollection
       });
+
+      region.show(editorView);
+
+      editorView.$('#picker').colpick();
 
       this.listenTo(editorView, 'add:pane', () => {
         var pane = new Backbone.Model();
@@ -76,6 +82,8 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       });
 
       region.show(editorView);
+
+
     }
 
     _printColor(configuratorView, color1, color2) {
