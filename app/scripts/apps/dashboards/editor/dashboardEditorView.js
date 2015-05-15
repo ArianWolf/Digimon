@@ -2,6 +2,8 @@ import 'gridster.js/dist/jquery.gridster';
 import App from 'app';
 import EditorTemplate from 'apps/dashboards/editor/templates/editor';
 import PaneTemplate from 'apps/dashboards/editor/templates/pane';
+import EditorLayout from 'apps/dashboards/editor/templates/editorLayout';
+import PreviewEmpty from 'apps/dashboards/editor/templates/previewEmpty';
 
 App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette) {
   'use strict';
@@ -29,6 +31,7 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
       this.className = 'gridster';
       this.childView = PaneView;
       this.childViewContainer = 'ul';
+      this.regions ={ preview: '.preview-zone'}
       super(...rest);
     }
 
@@ -58,5 +61,26 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
     }
   }
 
+  class EditorLayoutView extends Marionette.LayoutView {
+    constructor(...rest) {
+      this.regions = { 
+        editorContainer: '.editor-container',
+        preview: '.preview-zone'
+      };
+      this.template = EditorLayout; 
+      super(...rest);
+    }
+  }
+
+  class PreviewEmptyView extends Marionette.ItemView {
+    constructor(...rest) {
+      this.className = 'empty-preview';
+      this.template = PreviewEmpty; 
+      super(...rest);
+    }
+  }
+
+  Views.PreviewEmptyView = PreviewEmptyView;
+  Views.EditorLayoutView = EditorLayoutView;
   Views.DashboardEditorView = DashboardEditorView;
 });

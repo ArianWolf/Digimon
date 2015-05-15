@@ -1,0 +1,140 @@
+<div class="editor-container"></div>
+<div class="modal fade slide-up scrollable" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel" aria-hidden="false">
+  <div class="modal-dialog ">
+    <div class="modal-content-wrapper">
+      <div class="modal-content">
+        <div class="modal-header clearfix text-left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="pg-close fs-14"></i>
+          </button>
+          <h5 class="text-left p-b-5"><span class="semi-bold"><center>Configura tu Widget</center></span></h5>
+          <hr>
+
+        </div>
+        <div class="modal-body">
+          <div class="row width-1200">
+          <div class="col-md-6 margin-top-5-per padding-left-5-per">
+            <!--Tittle of Widget-->
+            <br>
+            <div class="row">
+              <div class="col-md-7">
+                <h5 class="text-left p-b-5"><span class="semi-bold"><strong>Escriba un titulo para la el Widget</strong></span></h5>
+              </div>
+              <div class="col-md-5">
+                <input type="text" placeholder="Titulo del Widget" class="form-control bgc-gray title" id="titulo" name="icon-filter">
+              </div>
+            </div>
+            <!--Type of Source-->
+            <div class="row">
+              <div class="col-md-7">
+                <h5 class="text-left p-b-5"><span class="semi-bold"><strong>Seleecionar tipo de Widget</strong></span></h5>
+              </div>
+              <div class="form-group col-md-5">
+                <select class="form-control  type-source">
+                  <option>Fuente 1</option>
+                  <option>Fuente 2</option>
+                  <option>Fuente 3</option>
+                  <option>Fuente 4</option>
+                </select>
+              </div>
+            </div>
+            <!--Type of Widget-->
+            <div class="row">
+              <div class="col-md-7">
+                <h5 class="text-left p-b-5"><span class="semi-bold"><strong>Seleecionar la fuente de datos</strong></span></h5>
+              </div>
+              <div class="form-group col-md-5">
+                <select class="form-control type-widget">
+                  <option>Widgets...</option>
+                  <option>Grafica de Barras</option>
+                  <option>Grafica de Lineas</option>
+                  <option>Grafica de Area</option>
+                  <option>Grafica de Tiempo Real</option>
+                </select>
+              </div>
+            </div>
+            <!--palette of colors-->
+            <div class="row">
+              <div class="col-md-7">
+                <h5 class="text-left p-b-5"><span class="semi-bold"><strong>Selecciona el color 1</strong></span></h5>
+              </div>
+              <div class="form-group color-palette col-md-5">
+                <select class="form-control select-color" id="sc1">
+                  <option>Colores...</option>
+                  <option class="blue-light">#6DC0F9</option>
+                  <option class="blue">#48B0F7</option>
+                  <option class="blue-dark">#3C93CE</option>
+                  <option class="blue-darker">#2B6A94</option>
+                  <option class="green-light">#40D9CA</option>
+                  <option class="green">#10CFBD</option>
+                  <option class="green-dark">#0DAD9E</option>
+                  <option class="green-darker">#0A7C71</option>
+                  <option class="purple-light">#8A7DBE</option>
+                  <option class="purple">#6D5CAE</option>
+                  <option class="purple-dark">#5B4D91</option>
+                  <option class="purple-darker">#413768</option>
+                  <option class="red-light">#F77975</option>
+                  <option class="red">#F55753</option>
+                  <option class="red-dark">#CD4945</option>
+                  <option class="red-darker">#933432</option>
+                  <option class="yellow-light">#F9D975</option>
+                  <option class="yellow">#F8D053</option>
+                  <option class="yellow-dark">#CFAE45</option>
+                  <option class="yellow-darker">#957D32</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7">
+                <h5 class="text-left p-b-5"><span class="semi-bold"><strong>Selecciona el color 2</strong></span></h5>
+              </div>
+              <div class="form-group color-palette col-md-5">
+                <select class="form-control select-color" id="sc2">
+                  <option>Colores...</option>
+                  <option class="blue-light">#6DC0F9</option>
+                  <option class="blue">#48B0F7</option>
+                  <option class="blue-dark">#3C93CE</option>
+                  <option class="blue-darker">#2B6A94</option>
+                  <option class="green-light">#40D9CA</option>
+                  <option class="green">#10CFBD</option>
+                  <option class="green-dark">#0DAD9E</option>
+                  <option class="green-darker">#0A7C71</option>
+                  <option class="purple-light">#8A7DBE</option>
+                  <option class="purple">#6D5CAE</option>
+                  <option class="purple-dark">#5B4D91</option>
+                  <option class="purple-darker">#413768</option>
+                  <option class="red-light">#F77975</option>
+                  <option class="red">#F55753</option>
+                  <option class="red-dark">#CD4945</option>
+                  <option class="red-darker">#933432</option>
+                  <option class="yellow-light">#F9D975</option>
+                  <option class="yellow">#F8D053</option>
+                  <option class="yellow-dark">#CFAE45</option>
+                  <option class="yellow-darker">#957D32</option>
+                </select>
+              </div>  
+            </div>
+            <!--Complete Button-->
+            <div class="row">
+              <div class="col-md-9 col-sm-9 col-xs-6"></div>
+              <div class="col-md-3 col-sm-3 col-xs-4">
+                <button class="btn btn-success btn-cons complete">Complete</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="preview margin-left-10-per"><strong>PREVIEW</strong></div> 
+            <div class="general-container margin-left-7-per">
+            
+              <div class="title-zone"></div>
+              <div class="preview-zone"></div>
+            </div>
+          </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.modal-content -->
+</div>

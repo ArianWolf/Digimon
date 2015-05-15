@@ -1,6 +1,7 @@
+import 'sweetalert/lib/sweet-alert.css';
+import Sweetalert from 'sweetalert';
 import App from 'app';
 import './dashboardEditorView';
-import './dashboardPaneConfiguratorView';
 import widgetsContainer from '../../../widgets/widgetsContainer';
 
 App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
@@ -10,14 +11,10 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
     constructor(...rest) {
       this.paneCollection = null;
       this.widgetsContainer = widgetsContainer;
-      this.colorPalette = {
-        red: 'red',
-        blue: 'blue',
-        green: 'green',
-        pink: 'pink',
-      }
-      this.color1 = 'steelblue';
-      this.color2 = 'lightblue';
+      this.color1 = 'black';
+      this.color2 = 'black';
+      this.currentPane = null;
+      this.lineFlag = true;
       super(...rest);
     }
 
@@ -25,129 +22,175 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       var _this = this;
       this.paneCollection = paneCollection;
       var region = this.getOption('region');
+
+      //create main view container and show it
+      var editorLayoutView = new Editor.Views.EditorLayoutView();
+      region.show(editorLayoutView);
+      
+      var editorRegion = editorLayoutView.getRegion('editorContainer');
+      //create editorView and show it
       var editorView = new Editor.Views.DashboardEditorView({
         collection: this.paneCollection
       });
+      editorRegion.show(editorView);
 
+      //render preview empty for first time
+      this._renderEmptyPreviewView(editorLayoutView);
+
+      //listener for show title in preview
+      this._showTitleOnPreview(editorLayoutView);
+
+      //listener for show graph in preview
+      this._showWidgetOnPreview(editorLayoutView, _this)
+
+      //add a new pane
       this.listenTo(editorView, 'add:pane', () => {
         var pane = new Backbone.Model();
         this.paneCollection.add(pane);
       });
 
-      this.listenTo(editorView, 'childview:remove:pane', (child) => {
-        child.model.destroy();
-      });
-
-      this.listenTo(editorView, 'childview:options:pane', (child) => {
-        var configuratorView = new Editor.Views.ConfiguratorView();
-        this._showConfigurator(configuratorView);
-        var _paneChild = child;
-
-        configuratorView.$('.title').on('keyup' , function() {
-          var title = configuratorView.$('.title').val();
-          configuratorView.$('.title-zone').empty();
-          configuratorView.$('.title-zone').append(title);
-        });
-        
-        configuratorView.$('.type-widget').on('change', function() {
-          var typeOfWidget = configuratorView.$('.type-widget').val();
-          var prev = configuratorView.getRegion('preview');
-          var graph = _this._getGraph(typeOfWidget);
-          graph.show(prev, _this.color1, _this.color2);
-        });
-
-        this._colorListener(configuratorView);
-
-        this.listenTo(configuratorView, 'complete:configurator', (child) => {
-          var title = this._getConfiguratorTitle(child);
-          this._setPaneTitle(_paneChild, title);
-     
-          var graphRegion = _paneChild.getRegion('body');
-          var typeOfWidget = this._getTypeOfWidgetToShow(child); 
-          var graph = this._getGraph(typeOfWidget);
-          graph.show(graphRegion, this.color1, this.color2);
-
-          child.view.$el.css('display', 'none');
-        }); 
-      });
-
+      //redirect to save dashboard save
       this.listenTo(editorView, 'save:dashboard', () => {
         App.router.navigate('/app/dashboard/nuevo/', { trigger: true });
       });
 
-      region.show(editorView);
+      //remove a pane selected
+      this.listenTo(editorView, 'childview:remove:pane', (child) => {
+        debugger;
+        child.model.destroy();
+      });
+
+      //listen for the change color and change it on preview
+      this._linstenForChangeColor('#sc1', editorLayoutView, _this);
+      this._linstenForChangeColor('#sc2', editorLayoutView, _this);
+
+      //clean the configurator when other pane is selected
+      this.listenTo(editorView, 'childview:options:pane', (pane) => {
+        editorLayoutView.$('#myModal').modal('show');
+        
+        if(pane != this.currentPane) {
+          this._cleanModalPane(editorLayoutView);
+
+          this._renderEmptyPreviewView(editorLayoutView);
+        } 
+
+        this.currentPane = pane;
+      });
+
+      //Set to the selected pane, the information from configurator
+      editorLayoutView.$('.complete').on('click', function() {
+        _this._printInformationOnPane(editorLayoutView, _this);
+      });
+    
+      editorLayoutView.$('.modal').on('keyup', function(event) {
+        if(event.keyCode === 13) {
+          _this._printInformationOnPane(editorLayoutView, _this);
+        }
+      });
+    }  
+
+    _cleanModalPane(view) { 
+      view.$('.title').val('');
+      view.$('.title-zone').empty();
+      view.$('.type-widget').val('Widgets...');
+      view.$('#sc1').css('background-color', '#FFFFFF');
+      view.$('#sc2').css('background-color', '#FFFFFF');
+      view.$('#sc1').val('Colores...');
+      view.$('#sc2').val('Colores...');
+      this.color1 = 'steelblue';
+      this.color2 = 'lightblue';
+
+      this._renderEmptyPreviewView(view);
     }
 
-    _printColor(configuratorView, color1, color2) {
-        var graphRegion = configuratorView.getRegion('preview');
-        var typeOfWidget = configuratorView.$('.type-widget').val();
+    _printColor(View, color1, color2) {
+        var graphRegion = View.getRegion('preview');
+        var typeOfWidget = View.$('.type-widget').val();
         var graph = this._getGraph(typeOfWidget);
-        graph.show(graphRegion, color1, color2);
+        if(graph != null){
+          graph.show(graphRegion, color1, color2);
+        }
     }
 
-    _showConfigurator(configuratorView) {
-      var region = this.getOption('modal');
-      region.show(configuratorView);
-    }
-
-    _getConfiguratorTitle(child) {
-      return child.view.$('.title').val();
+    _linstenForChangeColor(selector, view, _this) {
+      view.$(selector).on('change', function() {
+        if(selector == '#sc1') {
+          _this.color1 = view.$(selector).val();
+          view.$(selector).css('background-color', _this.color1);
+        } else {
+          _this.color2 = view.$(selector).val();
+          view.$(selector).css('background-color', _this.color2);
+        }
+        view.$(selector).val('');
+        _this._printColor(view, _this.color1, _this.color2);
+      });
     }
 
     _setPaneTitle(pane, title) {
       pane.$('.panel-title').html(title);
     }
 
-    _getTypeOfWidgetToShow(child) {
-      return  child.view.$('.type-widget').val();
-    }
-
     _getGraph(typeOfWidget) {
+      if(typeOfWidget == 'Widgets...') {
+        return null;
+      }
       return new this.widgetsContainer[typeOfWidget]();
     }
 
-    _colorListener(configuratorView) {
-      var _this = this;
+    _renderEmptyPreviewView(view) {
+      var previewEmptyView = new Editor.Views.PreviewEmptyView();
+      var previewEmptyRegion = view.getRegion('preview');
+      previewEmptyRegion.show(previewEmptyView);
+    }
 
-      configuratorView.$('#red1').on('click', function() {
-        _this.color1 = _this.colorPalette['red'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
+    _showTitleOnPreview(view) {
+      view.$('.title').on('keyup' , function() {
+        var title = view.$('.title').val();
+        view.$('.title-zone').empty();
+        view.$('.title-zone').append(title);
       });
+    }
 
-      configuratorView.$('#blue1').on('click', function() {
-        _this.color1 = _this.colorPalette['blue'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
+    _showWidgetOnPreview(view, _this) {
+      view.$('.type-widget').on('change', function() {
+        var typeOfWidget = view.$('.type-widget').val();
+        var preview = view.getRegion('preview');
+        debugger;
+        if (typeOfWidget == 'Grafica de Lineas' && _this.lineFlag == false) {
+          var graph = null;
+          var typeOfWidget = view.$('.type-widget').val('Widgets...');
+          _this._alertForLineGraph();
+          //alert about line graph
+        } else {
+          var graph = _this._getGraph(typeOfWidget);
+        }
+        if(graph != null){
+          graph.show(preview, _this.color1, _this.color2);
+        }
       });
+    }
 
-      configuratorView.$('#green1').on('click', function() {
-        _this.color1 = _this.colorPalette['green'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
-      });
+    _printInformationOnPane(view, _this) {
+      var title = view.$('.title').val();
+      _this._setPaneTitle(_this.currentPane, title);
+ 
+      var graphRegion = _this.currentPane.getRegion('body');
+      var typeOfWidget = view.$('.type-widget').val();
+      if (typeOfWidget == 'Grafica de Lineas' && this.lineFlag == false) {
+        var graph = null;
+      } else {
+        this.lineFlag = false;
+        var graph = _this._getGraph(typeOfWidget);
+      }
+      if(graph != null){
+        graph.show(graphRegion, this.color1, this.color2);
+      }
 
-      configuratorView.$('#pink1').on('click', function() {
-        _this.color1 = _this.colorPalette['pink'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
-      });
+      view.$('#myModal').modal('hide');
+    }
 
-      configuratorView.$('#red2').on('click', function() {
-        _this.color2 = _this.colorPalette['red'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
-      });
-
-      configuratorView.$('#blue2').on('click', function() {
-        _this.color2 = _this.colorPalette['blue'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
-      });
-
-      configuratorView.$('#green2').on('click', function() {
-        _this.color2 = _this.colorPalette['green'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
-      });
-
-      configuratorView.$('#pink2').on('click', function() {
-        _this.color2 = _this.colorPalette['pink'];
-        _this._printColor(configuratorView, _this.color1, _this.color2);
-      });
+    _alertForLineGraph() {
+        Sweetalert("Oops...", "la gráfica de linea solo puede aparecer una a la vez", "error");
     }
   }
 
