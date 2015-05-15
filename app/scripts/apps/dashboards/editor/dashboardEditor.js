@@ -1,3 +1,5 @@
+import 'sweetalert/lib/sweet-alert.css';
+import Sweetalert from 'sweetalert';
 import App from 'app';
 import './dashboardEditorView';
 import widgetsContainer from '../../../widgets/widgetsContainer';
@@ -9,15 +11,10 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
     constructor(...rest) {
       this.paneCollection = null;
       this.widgetsContainer = widgetsContainer;
-      this.colorPalette = {
-        red: 'red',
-        blue: 'blue',
-        green: 'green',
-        pink: 'pink',
-      }
-      this.color1 = 'steelblue';
-      this.color2 = 'lightblue';
+      this.color1 = 'black';
+      this.color2 = 'black';
       this.currentPane = null;
+      this.lineFlag = true;
       super(...rest);
     }
 
@@ -57,21 +54,22 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
         App.router.navigate('/app/dashboard/nuevo/', { trigger: true });
       });
 
-      this._colorListener(editorLayoutView);
-
       //remove a pane selected
       this.listenTo(editorView, 'childview:remove:pane', (child) => {
+        debugger;
         child.model.destroy();
       });
+
+      //listen for the change color and change it on preview
+      this._linstenForChangeColor('#sc1', editorLayoutView, _this);
+      this._linstenForChangeColor('#sc2', editorLayoutView, _this);
+
       //clean the configurator when other pane is selected
       this.listenTo(editorView, 'childview:options:pane', (pane) => {
         editorLayoutView.$('#myModal').modal('show');
         
         if(pane != this.currentPane) {
-          editorLayoutView.$('.title').val('');
-          editorLayoutView.$('.title-zone').empty();
-          this.color1 = 'steelblue';
-          this.color2 = 'lightblue';
+          this._cleanModalPane(editorLayoutView);
 
           this._renderEmptyPreviewView(editorLayoutView);
         } 
@@ -91,11 +89,41 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       });
     }  
 
+    _cleanModalPane(view) { 
+      view.$('.title').val('');
+      view.$('.title-zone').empty();
+      view.$('.type-widget').val('Widgets...');
+      view.$('#sc1').css('background-color', '#FFFFFF');
+      view.$('#sc2').css('background-color', '#FFFFFF');
+      view.$('#sc1').val('Colores...');
+      view.$('#sc2').val('Colores...');
+      this.color1 = 'steelblue';
+      this.color2 = 'lightblue';
+
+      this._renderEmptyPreviewView(view);
+    }
+
     _printColor(View, color1, color2) {
         var graphRegion = View.getRegion('preview');
         var typeOfWidget = View.$('.type-widget').val();
         var graph = this._getGraph(typeOfWidget);
-        graph.show(graphRegion, color1, color2);
+        if(graph != null){
+          graph.show(graphRegion, color1, color2);
+        }
+    }
+
+    _linstenForChangeColor(selector, view, _this) {
+      view.$(selector).on('change', function() {
+        if(selector == '#sc1') {
+          _this.color1 = view.$(selector).val();
+          view.$(selector).css('background-color', _this.color1);
+        } else {
+          _this.color2 = view.$(selector).val();
+          view.$(selector).css('background-color', _this.color2);
+        }
+        view.$(selector).val('');
+        _this._printColor(view, _this.color1, _this.color2);
+      });
     }
 
     _setPaneTitle(pane, title) {
@@ -103,6 +131,9 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
     }
 
     _getGraph(typeOfWidget) {
+      if(typeOfWidget == 'Widgets...') {
+        return null;
+      }
       return new this.widgetsContainer[typeOfWidget]();
     }
 
@@ -124,66 +155,42 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       view.$('.type-widget').on('change', function() {
         var typeOfWidget = view.$('.type-widget').val();
         var preview = view.getRegion('preview');
-        var graph = _this._getGraph(typeOfWidget);
-        graph.show(preview, _this.color1, _this.color2);
+        debugger;
+        if (typeOfWidget == 'Grafica de Lineas' && _this.lineFlag == false) {
+          var graph = null;
+          var typeOfWidget = view.$('.type-widget').val('Widgets...');
+          _this._alertForLineGraph();
+          //alert about line graph
+        } else {
+          var graph = _this._getGraph(typeOfWidget);
+        }
+        if(graph != null){
+          graph.show(preview, _this.color1, _this.color2);
+        }
       });
     }
 
     _printInformationOnPane(view, _this) {
-        var title = view.$('.title').val();
-        _this._setPaneTitle(_this.currentPane, title);
-   
-        var graphRegion = _this.currentPane.getRegion('body');
-        var typeOfWidget = view.$('.type-widget').val();
+      var title = view.$('.title').val();
+      _this._setPaneTitle(_this.currentPane, title);
+ 
+      var graphRegion = _this.currentPane.getRegion('body');
+      var typeOfWidget = view.$('.type-widget').val();
+      if (typeOfWidget == 'Grafica de Lineas' && this.lineFlag == false) {
+        var graph = null;
+      } else {
+        this.lineFlag = false;
         var graph = _this._getGraph(typeOfWidget);
-        graph.show(graphRegion, _this.color1, _this.color2);
+      }
+      if(graph != null){
+        graph.show(graphRegion, this.color1, this.color2);
+      }
 
-        view.$('#myModal').modal('hide');
+      view.$('#myModal').modal('hide');
     }
 
-    _colorListener(View) {
-      var _this = this;
-
-      View.$('#red1').on('click', function() {
-        debugger;
-        _this.color1 = _this.colorPalette['red'];
-        _this._printColor(View, _this.color1, _this.color2);
-      });
-
-      View.$('#blue1').on('click', function() {
-        _this.color1 = _this.colorPalette['blue'];
-        _this._printColor(View, _this.color1, _this.color2);
-      });
-
-      View.$('#green1').on('click', function() {
-        _this.color1 = _this.colorPalette['green'];
-        _this._printColor(View, _this.color1, _this.color2);
-      });
-
-      View.$('#pink1').on('click', function() {
-        _this.color1 = _this.colorPalette['pink'];
-        _this._printColor(View, _this.color1, _this.color2);
-      });
-
-      View.$('#red2').on('click', function() {
-        _this.color2 = _this.colorPalette['red'];
-        _this._printColor(View, _this.color1, _this.color2);
-      });
-
-      View.$('#blue2').on('click', function() {
-        _this.color2 = _this.colorPalette['blue'];
-        _this._printColor(View, _this.color1, _this.color2);
-      });
-
-      View.$('#green2').on('click', function() {
-        _this.color2 = _this.colorPalette['green'];
-        _this._printColor(View, _this.color1, _this.color2);
-      });
-
-      View.$('#pink2').on('click', function() {
-        _this.color2 = _this.colorPalette['pink'];
-        _this._printColor(View, _this.color1, _this.color2);
-      });
+    _alertForLineGraph() {
+        Sweetalert("Oops...", "la gráfica de linea solo puede aparecer una a la vez", "error");
     }
   }
 

@@ -6,10 +6,6 @@ import lineGraphTemplate from 'widgets/lineGraph/templates/lineGraph';
 export default class BarGraphView extends Marionette.ItemView {
   constructor(...rest) {
     this.template = lineGraphTemplate;
-    this.ui = {
-      'graph': '.rickshaw-stacked-bars'
-    };
-
     super(...rest);
   }
 
