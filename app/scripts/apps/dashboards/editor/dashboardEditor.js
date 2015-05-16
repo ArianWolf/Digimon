@@ -51,7 +51,23 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
 
       //redirect to save dashboard save
       this.listenTo(editorView, 'save:dashboard', () => {
-        App.router.navigate('/app/dashboard/nuevo/', { trigger: true });
+        var saveRegion = editorLayoutView.getRegion('save');
+        var saveDashboardView = new Editor.Views.SaveDashboard();
+
+        saveRegion.show(saveDashboardView);
+
+        editorLayoutView.$('.add').css('display', 'none');
+        editorLayoutView.$('.save').css('display', 'none');
+
+        editorLayoutView.$('#back').on('click', function() {
+          saveRegion.empty();
+          
+          editorLayoutView.$('.add').css('display', 'inline');
+          editorLayoutView.$('.save').css('display', 'inline');
+        })
+
+
+        //App.router.navigate('/app/dashboard/nuevo/', { trigger: true });
       });
 
       //remove a pane selected

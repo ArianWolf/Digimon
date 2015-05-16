@@ -2,8 +2,9 @@ import 'gridster.js/dist/jquery.gridster';
 import App from 'app';
 import EditorTemplate from 'apps/dashboards/editor/templates/editor';
 import PaneTemplate from 'apps/dashboards/editor/templates/pane';
-import EditorLayout from 'apps/dashboards/editor/templates/editorLayout';
-import PreviewEmpty from 'apps/dashboards/editor/templates/previewEmpty';
+import EditorLayoutTemplate from 'apps/dashboards/editor/templates/editorLayout';
+import PreviewEmptyTemplate from 'apps/dashboards/editor/templates/previewEmpty';
+import SaveDashboardTemplate from 'apps/dashboards/editor/templates/saveDashboard';
 
 App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette) {
   'use strict';
@@ -12,7 +13,7 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
     constructor(...rest) {
       this.tagName = 'li';
       this.className = 'panel panel-default';
-      this.regions = { body: '.panel-body'};
+      this.regions = { body: '.panel-body' };
       super(...rest);
     }
 
@@ -65,9 +66,10 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
     constructor(...rest) {
       this.regions = { 
         editorContainer: '.editor-container',
-        preview: '.preview-zone'
+        preview: '.preview-zone',
+        save: '.save-dashboard'
       };
-      this.template = EditorLayout; 
+      this.template = EditorLayoutTemplate; 
       super(...rest);
     }
   }
@@ -75,11 +77,18 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
   class PreviewEmptyView extends Marionette.ItemView {
     constructor(...rest) {
       this.className = 'empty-preview';
-      this.template = PreviewEmpty; 
+      this.template = PreviewEmptyTemplate; 
       super(...rest);
     }
   }
 
+  class SaveDashboard extends Marionette.ItemView {
+    constructor(...rest) {
+      this.template = SaveDashboardTemplate; 
+      super(...rest);
+    }
+  }
+  Views.SaveDashboard = SaveDashboard;
   Views.PreviewEmptyView = PreviewEmptyView;
   Views.EditorLayoutView = EditorLayoutView;
   Views.DashboardEditorView = DashboardEditorView;
