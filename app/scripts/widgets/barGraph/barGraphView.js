@@ -10,6 +10,7 @@ export default class BarGraphView extends Marionette.ItemView {
     this.ui = {
       'graph': '.rickshaw-stacked-bars'
     };
+    this.alive = true;
     super(...rest);
   }
 
@@ -26,7 +27,7 @@ export default class BarGraphView extends Marionette.ItemView {
 
     graph.render();
 
-    this._resizeGraphOnPanelSizeChange(graph, _regionPane);
+    this._resize(graph, _regionPane);
 
     $(this.ui.graph).data('chart', graph);
   }
@@ -83,9 +84,8 @@ export default class BarGraphView extends Marionette.ItemView {
     });
   }
 
-  _resizeGraphOnPanelSizeChange(graph, region) {
-    
-    $('#main-container').on('mouseup', function() {
+  _resize(graph, region) {
+    $('.resize').on('click', function() {
       graph.configure({
         width: region.$el.width(),
         height: region.$el.height() - 80
@@ -93,14 +93,5 @@ export default class BarGraphView extends Marionette.ItemView {
 
       graph.render();
     });
-
-    $('#main-container').on('mousemove', function() {
-      graph.configure({
-        width: region.$el.width(),
-        height: region.$el.height() - 80
-      });
-
-      graph.render();
-    });  
   }
 }

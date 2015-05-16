@@ -41,7 +41,7 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       this._showTitleOnPreview(editorLayoutView);
 
       //listener for show graph in preview
-      this._showWidgetOnPreview(editorLayoutView, _this)
+      this._showWidgetOnPreview(editorLayoutView, _this);
 
       //add a new pane
       this.listenTo(editorView, 'add:pane', () => {
@@ -56,7 +56,6 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
 
       //remove a pane selected
       this.listenTo(editorView, 'childview:remove:pane', (child) => {
-        debugger;
         child.model.destroy();
       });
 
@@ -68,7 +67,7 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       this.listenTo(editorView, 'childview:options:pane', (pane) => {
         editorLayoutView.$('#myModal').modal('show');
         
-        if(pane != this.currentPane) {
+        if(pane !== this.currentPane) {
           this._cleanModalPane(editorLayoutView);
 
           this._renderEmptyPreviewView(editorLayoutView);
@@ -107,14 +106,14 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
         var graphRegion = View.getRegion('preview');
         var typeOfWidget = View.$('.type-widget').val();
         var graph = this._getGraph(typeOfWidget);
-        if(graph != null){
+        if(graph !== null){
           graph.show(graphRegion, color1, color2);
         }
     }
 
     _linstenForChangeColor(selector, view, _this) {
       view.$(selector).on('change', function() {
-        if(selector == '#sc1') {
+        if(selector === '#sc1') {
           _this.color1 = view.$(selector).val();
           view.$(selector).css('background-color', _this.color1);
         } else {
@@ -131,7 +130,7 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
     }
 
     _getGraph(typeOfWidget) {
-      if(typeOfWidget == 'Widgets...') {
+      if(typeOfWidget === 'Widgets...') {
         return null;
       }
       return new this.widgetsContainer[typeOfWidget]();
@@ -155,16 +154,16 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       view.$('.type-widget').on('change', function() {
         var typeOfWidget = view.$('.type-widget').val();
         var preview = view.getRegion('preview');
-        debugger;
-        if (typeOfWidget == 'Grafica de Lineas' && _this.lineFlag == false) {
+
+        if (typeOfWidget === 'Grafica de Lineas' && _this.lineFlag === false) {
           var graph = null;
-          var typeOfWidget = view.$('.type-widget').val('Widgets...');
+          typeOfWidget = view.$('.type-widget').val('Widgets...');
           _this._alertForLineGraph();
           //alert about line graph
         } else {
-          var graph = _this._getGraph(typeOfWidget);
+          graph = _this._getGraph(typeOfWidget);
         }
-        if(graph != null){
+        if(graph !== null){
           graph.show(preview, _this.color1, _this.color2);
         }
       });
@@ -176,13 +175,13 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
  
       var graphRegion = _this.currentPane.getRegion('body');
       var typeOfWidget = view.$('.type-widget').val();
-      if (typeOfWidget == 'Grafica de Lineas' && this.lineFlag == false) {
+      if (typeOfWidget === 'Grafica de Lineas' && this.lineFlag === false) {
         var graph = null;
       } else {
         this.lineFlag = false;
-        var graph = _this._getGraph(typeOfWidget);
+        graph = _this._getGraph(typeOfWidget);
       }
-      if(graph != null){
+      if(graph !== null){
         graph.show(graphRegion, this.color1, this.color2);
       }
 
@@ -190,7 +189,7 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
     }
 
     _alertForLineGraph() {
-        Sweetalert("Oops...", "la gráfica de linea solo puede aparecer una a la vez", "error");
+      Sweetalert('Oops...', 'la gráfica de linea solo puede aparecer una a la vez', 'error');
     }
   }
 

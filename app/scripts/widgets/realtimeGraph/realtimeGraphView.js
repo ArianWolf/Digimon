@@ -30,7 +30,7 @@ export default class RealtimeGraphView extends Marionette.ItemView {
 
     this._updateGraphRealtime(graph, data);
 
-    this._resizeGraphOnPanelChange(graph, _regionPane);
+    this._resize(graph, _regionPane);
 
     $(this.ui.graph).data('chart', graph);
   }
@@ -49,7 +49,7 @@ export default class RealtimeGraphView extends Marionette.ItemView {
   _createGraph(data, region, color1, color2) {
     return new Rickshaw.Graph({
       element: this.ui.graph[0],
-      height: region.$el.height(),
+      height: region.$el.height()-80,
       renderer: 'area',
       padding: { top: 0.5 },
       series: [{
@@ -89,8 +89,8 @@ export default class RealtimeGraphView extends Marionette.ItemView {
     }, 1000);    
   }
 
-  _resizeGraphOnPanelChange(graph, region) {
-    $('#main-container').on('mouseup', function() {
+  _resize(graph, region) {
+    $('.resize').on('click', function() {
       graph.configure({
         width: region.$el.width(),
         height: region.$el.height()-80
@@ -98,14 +98,5 @@ export default class RealtimeGraphView extends Marionette.ItemView {
 
       graph.render();
     });
-
-    $('#main-container').on('mousemove', function() {
-      graph.configure({
-        width: region.$el.width(),
-        height: region.$el.height()-80
-      });
-
-      graph.render();
-    });  
   }
 }
