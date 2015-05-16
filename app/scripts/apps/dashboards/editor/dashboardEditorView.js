@@ -31,7 +31,7 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
       this.className = 'gridster';
       this.childView = PaneView;
       this.childViewContainer = 'ul';
-      this.regions ={ preview: '.preview-zone'}
+      this.regions ={ preview: '.preview-zone'};
       super(...rest);
     }
 
