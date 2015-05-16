@@ -12,11 +12,12 @@ export default class RealtimeGraphView extends Marionette.ItemView {
       'yAxisLine' : '#rickshaw-realtime_y_axis .tick.major line',
       'YAxisText' : '#rickshaw-realtime_y_axis .tick.major text'
     };
-    
+    this.isAlive = true;
     super(...rest);
   }
 
   onShow() {
+    var _this = this;
     var _regionPane = this.getOption('region');
 
     var _color1 = this.getOption('color1');
@@ -30,7 +31,9 @@ export default class RealtimeGraphView extends Marionette.ItemView {
 
     this._updateGraphRealtime(graph, data);
 
-    this._resize(graph, _regionPane);
+    this._changeAliveStatus(_this);
+
+    this._reziseOnPanelSizeChange(graph, _regionPane, _this);
 
     $(this.ui.graph).data('chart', graph);
   }
@@ -98,5 +101,29 @@ export default class RealtimeGraphView extends Marionette.ItemView {
 
       graph.render();
     });
+  }
+
+  _reziseOnPanelSizeChange(graph, region, _this){
+    $('#main-container').on('mouseup', function() {
+      if(_this.isAlive === true) {
+        graph.configure({
+          width: region.$el.width(),
+          height: region.$el.height() - 80
+        });
+
+        graph.render();
+      }
+    });
+
+    $('#main-container').on('mousemove', function() {
+      if(_this.isAlive === true) {
+        graph.configure({
+          width: region.$el.width(),
+          height: region.$el.height() - 80
+        });
+
+        graph.render();
+      }
+    });  
   }
 }
