@@ -92,14 +92,9 @@ export default class RealtimeGraphView extends Marionette.ItemView {
     }, 1000);    
   }
 
-  _resize(graph, region) {
-    $('.resize').on('click', function() {
-      graph.configure({
-        width: region.$el.width(),
-        height: region.$el.height()-80
-      });
-
-      graph.render();
+  _changeAliveStatus(_this) {
+    $('.remove').on('click', function() {
+      _this.isAlive = false;
     });
   }
 
