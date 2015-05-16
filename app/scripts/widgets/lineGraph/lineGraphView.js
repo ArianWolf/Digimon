@@ -16,12 +16,7 @@ export default class BarGraphView extends Marionette.ItemView {
 
     var _this = this;
 
-    $('#main-container').on('mouseup', function() {
-      _this._createGraph(_regionPane);
-    });
-
-
-    $('#main-container').on('mousemove', function() { 
+    $('.resize').on('click', function() {
       _this._createGraph(_regionPane);
     });
   }
