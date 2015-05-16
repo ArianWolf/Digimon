@@ -64,13 +64,6 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
           child.view.$('.save').css('display', 'inline');
         });
 
-        editorLayoutView.$('#back').on('click', function() {
-          saveRegion.empty();
-          
-          editorLayoutView.$('.add').css('display', 'inline');
-          editorLayoutView.$('.save').css('display', 'inline');
-        });
-
         this.listenTo(saveDashboardView, 'save:data', (child) => {
           var data = this._getDashboardData(child);
           var dashboard = new Backbone.Model(data);
