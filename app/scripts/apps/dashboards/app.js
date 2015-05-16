@@ -21,7 +21,7 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette) {
         modal: this.getOption('modal')
       });
 
-      dashboardEditor.showEditor(paneCollection);
+      dashboardEditor.showEditor(paneCollection, this.dashboards);
     }
 
     editDashboard() {

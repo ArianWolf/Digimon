@@ -64,12 +64,15 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
 
   class EditorLayoutView extends Marionette.LayoutView {
     constructor(...rest) {
+      this.template = EditorLayoutTemplate; 
       this.regions = { 
         editorContainer: '.editor-container',
         preview: '.preview-zone',
         save: '.save-dashboard'
       };
-      this.template = EditorLayoutTemplate; 
+      this.triggers = {
+        'click #back': 'back:view'
+      };
       super(...rest);
     }
   }
@@ -85,6 +88,9 @@ App.module('Dashboards.Editor.Views', function (Views, App, Backbone, Marionette
   class SaveDashboard extends Marionette.ItemView {
     constructor(...rest) {
       this.template = SaveDashboardTemplate; 
+      this.triggers = {
+        'click #save': 'save:data'
+      };
       super(...rest);
     }
   }

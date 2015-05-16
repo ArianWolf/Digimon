@@ -18,7 +18,7 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
       super(...rest);
     }
 
-    showEditor(paneCollection) {
+    showEditor(paneCollection, dashboards) {
       var _this = this;
       this.paneCollection = paneCollection;
       var region = this.getOption('region');
@@ -54,21 +54,34 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
         var saveRegion = editorLayoutView.getRegion('save');
         var saveDashboardView = new Editor.Views.SaveDashboard();
 
-        saveRegion.show(saveDashboardView);
-
         editorLayoutView.$('.add').css('display', 'none');
         editorLayoutView.$('.save').css('display', 'none');
+
+        this.listenTo(editorLayoutView, 'back:view', (child) => {
+          saveRegion.empty();
+          
+          child.view.$('.add').css('display', 'inline');
+          child.view.$('.save').css('display', 'inline');
+        });
 
         editorLayoutView.$('#back').on('click', function() {
           saveRegion.empty();
           
           editorLayoutView.$('.add').css('display', 'inline');
           editorLayoutView.$('.save').css('display', 'inline');
-        })
+        });
 
+        this.listenTo(saveDashboardView, 'save:data', (child) => {
+          var data = this._getDashboardData(child);
+          var dashboard = new Backbone.Model(data);
+          dashboards.add(dashboard);
 
-        //App.router.navigate('/app/dashboard/nuevo/', { trigger: true });
+          App.router.navigate('/app/dashboard/', { trigger: true });
+        });
+
+        saveRegion.show(saveDashboardView);
       });
+
 
       //remove a pane selected
       this.listenTo(editorView, 'childview:remove:pane', (child) => {
@@ -103,6 +116,13 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
         }
       });
     }  
+
+    _getDashboardData(child) {
+      return {
+        name: child.view.$('#name').val(),
+        description: child.view.$('#description').val()
+      };
+    }
 
     _cleanModalPane(view) { 
       view.$('.title').val('');
