@@ -14,14 +14,6 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette){
       this._loadModuleAndRun('showNewDashboard');
     }
 
-    editDashboard() {
-      this._loadModuleAndRun('editDashboard');
-    }
-
-    configurePane() {
-      this._loadModuleAndRun('configurePane');
-    }
-
     _loadModuleAndRun(action, ...rest) {
       require(['apps/dashboards/app'], function() {
         App.startSubApp('Dashboards', {
@@ -38,9 +30,7 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette){
       controller: new DashboardController(),
       appRoutes: {
         'app/dashboard/': 'showDashboardList',
-        'app/dashboard/crear/': 'showNewDashboard',
-        'app/dashboard/nuevo/': 'editDashboard',
-        'app/dashboard/crear/configurar/': 'configurePane'
+        'app/dashboard/crear/': 'showNewDashboard'
       }
     });
   });

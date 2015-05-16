@@ -2,7 +2,6 @@ import App from 'app';
 import './editor/dashboardEditor';
 import './list/dashboardList';
 import './entities';
-import './new/editForm';
 
 App.module('Dashboards', function(Dashboards, App, Backbone, Marionette) {
   'use strict';
@@ -21,15 +20,7 @@ App.module('Dashboards', function(Dashboards, App, Backbone, Marionette) {
         modal: this.getOption('modal')
       });
 
-      dashboardEditor.showEditor(paneCollection);
-    }
-
-    editDashboard() {
-      var editForm = new Dashboards.New.EditForm({
-        region: this.getOption('region')
-      });
-
-      editForm.showFormEdit(this.dashboards);
+      dashboardEditor.showEditor(paneCollection, this.dashboards);
     }
 
     showDashboardList() {
