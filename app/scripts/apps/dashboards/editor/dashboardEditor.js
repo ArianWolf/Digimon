@@ -155,14 +155,8 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
         var typeOfWidget = view.$('.type-widget').val();
         var preview = view.getRegion('preview');
 
-        if (typeOfWidget === 'Grafica de Lineas' && _this.lineFlag === false) {
-          var graph = null;
-          typeOfWidget = view.$('.type-widget').val('Widgets...');
-          _this._alertForLineGraph();
-          //alert about line graph
-        } else {
-          graph = _this._getGraph(typeOfWidget);
-        }
+        var graph = _this._getGraph(typeOfWidget);
+
         if(graph !== null){
           graph.show(preview, _this.color1, _this.color2);
         }
@@ -175,21 +169,14 @@ App.module('Dashboards.Editor', function(Editor, App, Backbone, Marionette) {
  
       var graphRegion = _this.currentPane.getRegion('body');
       var typeOfWidget = view.$('.type-widget').val();
-      if (typeOfWidget === 'Grafica de Lineas' && this.lineFlag === false) {
-        var graph = null;
-      } else {
-        this.lineFlag = false;
-        graph = _this._getGraph(typeOfWidget);
-      }
+
+      var graph = _this._getGraph(typeOfWidget);
+
       if(graph !== null){
         graph.show(graphRegion, this.color1, this.color2);
       }
 
       view.$('#myModal').modal('hide');
-    }
-
-    _alertForLineGraph() {
-      Sweetalert('Oops...', 'la gráfica de linea solo puede aparecer una a la vez', 'error');
     }
   }
 
