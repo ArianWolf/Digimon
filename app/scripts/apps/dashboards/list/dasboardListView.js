@@ -15,7 +15,8 @@ App.module('Dashboards.List.Views', function (Views, App, Backbone, Marionette) 
       
       this.triggers = { 
         'click .removeItem': 'remove:item',
-        'click .editItem': 'edit:dashboard:item'
+        'click .editItem': 'edit:item',
+        'click .saveItem': 'save:item'
       };
     }
   }
