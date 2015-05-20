@@ -1,5 +1,5 @@
 import App from 'app';
-import './profileView';
+import './userProfileView';
 
 App.module('Users.Profile', function(Profile, App, Backbone, Marionette) {
   'use strict';
@@ -8,7 +8,7 @@ App.module('Users.Profile', function(Profile, App, Backbone, Marionette) {
     showUserProfile() {
       debugger;
       var region = this.getOption('region');
-      var profileView = new Profile.Views.ProfileView();
+      var profileView = new Profile.Views.UserProfileView();
 
       region.show(profileView);
     }

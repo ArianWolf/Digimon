@@ -2,6 +2,7 @@ import App from 'app';
 import './entities';
 import './list/userList';
 import './new/userNew';
+import './profile/userProfile';
 
 App.module('Users', function(Users, App, Backbone, Marionette) {
   'use strict';
@@ -87,7 +88,7 @@ App.module('Users', function(Users, App, Backbone, Marionette) {
     
     showProfile(){
       var userProfile = new Users.Profile.UserProfile({ region: this.getOption('region') });
-
+      debugger;
       userProfile.showUserProfile();
     }
   }
