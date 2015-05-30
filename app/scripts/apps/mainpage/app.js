@@ -20,7 +20,8 @@ App.module('Mainpage', function(Mainpage, App, Backbone,Marionette) {
         { id: '1', icon: 'fa-bar-chart', text: 'Crea tus propios dashboards', url: 'dashboard/crear/' },
         { id: '2', icon: 'fa-upload', text: 'Sube tus fuentes de información', url: 'fuentes/' },
         { id: '3', icon: 'fa-user', text: 'Edita tu perfil, ayudanos a conocerte', url: 'usuarios/perfil/' },
-        { id: '4', icon: 'fa-users', text: 'Añade usuarios a los dashboards que tú hayas creado', url: 'usuarios/perfil/' }
+        { id: '4', icon: 'fa-list', text: 'Echale un ojo a tu lista de dashbaords y realiza acciones', url: 'dashboard/' },
+        { id: '5', icon: 'fa-users', text: 'Añade usuarios a los dashboards que tú hayas creado', url: 'dashboard/' },
       ]);
     }
   }
