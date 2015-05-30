@@ -36,6 +36,12 @@ App.module('Dashboards.List', function(List, App, Backbone, Marionette) {
         this._setDisplayVauleToButtons(child, 'none', 'inline');
       });
 
+      this.listenTo(listView, 'childview:edit:user',(child) => {
+        debugger;
+        listView.$('#modalSlideLeft').modal('show');
+      });
+
+
       this.listenTo(listView, 'childview:save:item', (child) => {
         var name = child.$('.inputName').val();
         var description = child.$('.inputDescription').val();
