@@ -31,6 +31,18 @@ App.module('Users.Entities', function(Entities, App, Backbone){
     }
   }
 
+  class UserListModel extends Backbone.Model { }
+
+  class UserListCollection extends Backbone.Collection {
+    constructor(...rest) {
+      this.model = UserListModel;
+      super(...rest);
+    }
+  }
+
   Entities.User = User;
   Entities.UserCollection = UserCollection;
+
+  Entities.UserListModel = UserListModel;
+  Entities.UserListCollection = UserListCollection;
 });

@@ -23,7 +23,7 @@ App.module('Users', function(Users, App, Backbone, Marionette){
     }
 
     showProfile() {
-      this._loadModuleAndRun('showPorfile');
+      this._loadModuleAndRun('showProfile');
     }
 
     _loadModuleAndRun(action, ...rest) {
