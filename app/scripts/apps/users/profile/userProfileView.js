@@ -10,8 +10,12 @@ App.module('Users.Profile.Views', function (Views, App, Backbone, Marionette) {
       this.template = userProfileTemplate;
       this.regions = { userList: '.user-list' }
       this.triggers = { 
-        'click #edit': 'edit:info',
-        'click #save' : 'save:info' }
+        'click #edit-info': 'edit:info',
+        'click #edit-pass': 'edit:pass',
+        'click #create-group': 'create:group',
+        'click #complete-edit-pass': 'complete:pass',
+        'click #complete-edit-save': 'complete:save'
+      }
       super(...rest);
     }
   }

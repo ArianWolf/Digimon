@@ -13,7 +13,7 @@
             <i class="fa fa-check-circle text-success fs-16 m-t-10"></i>
           </div>
           <div class="col-xs-height p-l-20">
-            <h3 class="no-margin">David Josue Nester</h3>
+            <h3 id='name' class="no-margin">David Josue Nester</h3>
             <p class="no-margin fs-16">Esta emocionado con la nueva aplicacion DASHBOARDS.  </p>
             <p class="hint-text m-t-5 small">Culiacán Sinaloa | Dashboards .inc</p>
           </div>
@@ -21,14 +21,16 @@
       </div>
       
       <div class="profile-data">
-        <div>David Josue Nester</div>
-        <div> DNesterAl</div>
-        <div>Davidnester@gmail.com</div>
+        <div id='name2'>David Josue Nester</div>
+        <div id='username'> DNesterAl</div>
+        <div id='email'>Davidnester@gmail.com</div>
       </div>
-
-      <button id="edit" class="btn btn-primary btn-cons btn-animated from-left fa fa-pencil pull-right" type="button">
-  		  <span>Editar</span>
+      <button id="edit-info" class="btn-edit btn btn-primary btn-cons btn-animated from-left fa fa-pencil pull-right" type="button">
+  		  <span>Editar Información</span>
   	  </button>
+      <button id="edit-pass" class="btn-edit btn btn-primary btn-cons btn-animated from-left fa fa-pencil pull-right" type="button">
+        <span>Editar contraseña</span>
+      </button>
     </div>
 
     <div class="section-container-add">
@@ -52,78 +54,105 @@
     </div>
   </div>
 
-
-  
   <div class="col-md-7"> 
-  	<div class="edit-form"> 
-      <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-9 ">
-          <div class="panel panel-transparent">
-            <div class="panel-body">
-              <form id="form-personal" role="form" autocomplete="off">
-                <div class="row clearfix">
-                  
-                  <div class="col-md-6">
-                    <div class="form-group form-group-default required">
-                      <label>Nombre</label>
-                      <input id="firstname" type="text" class="form-control" name="firstName" required disabled>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="form-group form-group-default">
-                      <label>Apellido</label>
-                      <input id="lastname" type="text" class="form-control" name="lastName" required disabled>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group form-group-default required">
-                      <label>Nombre de usuario</label>
-                      <input id="username" type="text" class="form-control error" name="username" placeholder="Nombre de usuario no debe contener espacios" required disabled>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group form-group-default required">
-                      <label>Contraseña</label>
-                      <input id="password" type="password" class="form-control" name="password" placeholder="Minimo 4 caracteres" required disabled>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group form-group-default">
-                      <label>Repetir contraseña</label>
-                      <input id="confirm" type="password" class="form-control" name="confirm" placeholder="Debe ser igual a la contraseña ingresada" required disabled>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group form-group-default">
-                      <label>Correo</label>
-                      <input id="email" type="email" class="form-control" name="email" placeholder="Puede recibir un correo de confirmacion" required disabled>
-                    </div>
-                  </div>
-                </div>
-                <div class="clearfix"></div>
-              </form>
-              <button id='save' class="btn btn-primary btn-cons btn-animated from-left fa fa-save pull-right" type="button" disabled>
-               <span>Guardar</span>
-              </button>
+    <div class="section-container">
+      <div class="container-xs-height">
+        <div class="row-xs-height">
+          <div class="social-user-profile col-xs-height text-center col-top">
+            <div class="thumbnail-wrapper d48 circular bordered b-white add-user-thumbnail">
+                <i class="fa fa-users"></i>
             </div>
+            <br>
+          </div>
+          <div class="col-xs-height p-l-20">
+            <h3 class="no-margin">Crea tus grupos</h3>
+            <p class="no-margin fs-16">Crea grupos para compartir dashboards grupales y modificables.</p>
           </div>
         </div>
       </div>
-	</div>
+      <br>
+      <div class="form-group">
+        <label>Nombre del grupo</label>
+        <input id='group-name' type="email" class="form-control" required="">
+      </div>
 
-	</div>
+      <button id="create-group" class="btn btn-primary btn-cons btn-animated from-left fa fa-check pull-right" type="button">
+        <span>Crear</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modal-edit-info" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel" aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+        <div class="modal-content">
+            <div class="modal-header clearfix text-left">
+               <div class="edit-header">Editar informacion</div>
+               <br>
+               <hr>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Nombre y Apellidos</label>        
+                <input id='name-edit' type="text" class="form-control" required="">
+              </div>
+
+              <div class="form-group">
+                <label>Nombre de usuario</label>
+                <input id='username-edit' type="text" class="form-control" required="">
+              </div>
+
+              <div class="form-group">
+                <label>Email</label>
+                <input id='email-edit' type="email" class="form-control" required="">
+              </div>
+
+              <button id="complete-edit-save" class="btn btn-primary btn-cons btn-animated from-left fa fa-save pull-right" type="button">
+                <span>Guardar</span>
+              </button>
+              <br>
+            </div>
+        </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+
+<div class="modal fade slide-up disable-scroll" id="modal-edit-pass" tabindex="-1" role="dialog" aria-labelledby="modalSlideUpLabel" aria-hidden="false">
+    <div class="modal-dialog ">
+        <div class="modal-content-wrapper">
+        <div class="modal-content">
+            <div class="modal-header clearfix text-left">
+               <div class="edit-header">Editar Contraseña</div>
+               <br>
+               <hr>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Contraseña actual</label>
+                
+                <input id='current-pass' type="password" class="form-control" required="">
+              </div>
+              <div class="form-group">
+                <label>Nueva contraseña</label>
+                
+                <input id='new-pass' type="password" class="form-control" required="">
+              </div>
+
+              <div class="form-group">
+                <label>Repetir nueva contraseña</label>
+                
+                <input id='re-new-pass' type="password" class="form-control" required="">
+              </div>
+
+              <button id="complete-edit-pass" class="btn btn-primary btn-cons btn-animated from-left fa fa-save pull-right" type="button">
+                <span>Guardar</span>
+              </button>
+              <br>
+            </div>
+        </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
 </div>
